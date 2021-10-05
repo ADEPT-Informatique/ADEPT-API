@@ -1,9 +1,6 @@
 ﻿using ADEPT_API.Models;
 using ADEPT_API.Repositories.IRepository;
-using ADEPT_API.Services;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;

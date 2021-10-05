@@ -1,4 +1,5 @@
 ﻿using ADEPT_API.Models;
+using ADEPT_API.Models.MembreConfiance;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,9 @@ namespace ADEPT_API.Context
 
         }
 
-
         public DbSet<User> Users { get; set; }
 
-        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }     
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
