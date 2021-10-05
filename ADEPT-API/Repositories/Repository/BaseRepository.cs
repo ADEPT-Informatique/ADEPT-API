@@ -1,5 +1,6 @@
 ﻿using ADEPT_API.Context;
 using ADEPT_API.Dto;
+using ADEPT_API.Models;
 using ADEPT_API.Repositories.IRepository;
 using Microsoft.EntityFrameworkCore;
 using Sakura.AspNetCore;
@@ -99,7 +100,10 @@ namespace ADEPT_API.Repositories.Repository
 
         public T GetFirstOrDefault(Expression<Func<T, bool>> filter = null, string includeProperties = null)
         {
-            IQueryable<T> query = dbSet ?? new List<T>().AsQueryable<T>();
+            IQueryable<T> query = dbSet;
+
+            if (query.FirstOrDefault() == null)
+                return null;
 
             if (filter != null)
             {
