@@ -1,5 +1,5 @@
 using ADEPT_API.Context;
-using ADEPT_API.Dto;
+using ADEPT_API.Extentions;
 using ADEPT_API.Middleware;
 using ADEPT_API.Repositories.IRepository;
 using ADEPT_API.Repositories.Repository;
@@ -9,26 +9,20 @@ using ADEPT_API.Services.Service;
 using FirebaseAdmin;
 using FirebaseAdmin.Auth;
 using Google.Apis.Auth.OAuth2;
-using Google.Apis.Util;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace ADEPT_API
 {
@@ -45,8 +39,8 @@ namespace ADEPT_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            AddServicesAndRepositories(services);
-
+            services.AddAdeptServices();
+            services.AddMappingServices();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
              .AddJwtBearer(x =>
             {
@@ -100,19 +94,20 @@ namespace ADEPT_API
             app.UseAuthorization();
 
             app.UseMiddleware<AuthenticationMiddleWare>();
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-            string customToken =  await FirebaseAuth.DefaultInstance.CreateCustomTokenAsync("urOxnFybSTVo4Nai5rWuQuYWJAA3");
+            string customToken = await FirebaseAuth.DefaultInstance.CreateCustomTokenAsync("urOxnFybSTVo4Nai5rWuQuYWJAA3");
             await SignInWithCustomTokenAsync(customToken);
         }
 
         private static async Task SignInWithCustomTokenAsync(string customToken)
         {
             string apiKey = AdeptConfig.Get("AppSettings:firebaseApiKey");
-            using(HttpClient client = new HttpClient())
+            using (HttpClient client = new HttpClient())
             {
                 var json = JsonConvert.SerializeObject(new
                 {
@@ -128,7 +123,7 @@ namespace ADEPT_API
                 dynamic kekw = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
                 AdeptConfig.TestToken = kekw.idToken;
 
-                //Arrêtez sur la ligne suivante pour obtenir l'idToken pour test
+                //Arrï¿½tez sur la ligne suivante pour obtenir l'idToken pour test
             }
         }
 
