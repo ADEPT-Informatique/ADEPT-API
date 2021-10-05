@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ADEPT_API.Repositories.IRepository
 {
-    public interface IAuthRepository : IBaseRepository<User> { }
-   
+    public interface IUserRepository : IBaseRepository<User>
+    {
+    }
 }

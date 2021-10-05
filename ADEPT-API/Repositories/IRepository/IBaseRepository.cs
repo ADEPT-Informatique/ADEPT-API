@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ADEPT_API.Dto;
+using Sakura.AspNetCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -9,8 +11,16 @@ namespace ADEPT_API.Repositories.IRepository
     public interface IBaseRepository<T> where T : class
     {
 
-        T Get(int id);
+        T Get(Guid id);
         IEnumerable<T> GetAll(
+          Expression<Func<T, bool>> filter = null,
+          Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+          string includeProperties = null
+          );
+
+        PagedList<IQueryable<T>, T> GetPaginatedResults(
+          int pageIndex,
+          int pageSize,
           Expression<Func<T, bool>> filter = null,
           Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
           string includeProperties = null
@@ -25,7 +35,7 @@ namespace ADEPT_API.Repositories.IRepository
 
         void AddOrUpdate(T entity);
 
-        void Remove(int id);
+        void Remove(Guid id);
 
         void Remove(T entity);
 

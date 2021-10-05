@@ -9,8 +9,7 @@ namespace ADEPT_API.Services
 {
     public interface IAuthService
     {
-        AuthUser Authenticate(string pToken);
 
-
+        // *crickets*
     }
 }

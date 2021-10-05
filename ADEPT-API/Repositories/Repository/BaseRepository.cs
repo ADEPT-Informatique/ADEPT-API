@@ -1,6 +1,9 @@
 ﻿using ADEPT_API.Context;
+using ADEPT_API.Dto;
+using ADEPT_API.Models;
 using ADEPT_API.Repositories.IRepository;
 using Microsoft.EntityFrameworkCore;
+using Sakura.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +14,7 @@ namespace ADEPT_API.Repositories.Repository
 {
     public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
     {
-        private readonly AdeptContext _context;
+        protected readonly AdeptContext _context;
         internal DbSet<T> dbSet;
 
         protected virtual AdeptContext Context { get { return _context; } }
@@ -31,7 +34,7 @@ namespace ADEPT_API.Repositories.Repository
         {
             var type = entity.GetType();
             var property = type.GetProperties().FirstOrDefault(x => x.Name == "Id");
-            if (property != null && (int)property.GetValue(entity) > 0)
+            if (property != null && (Guid)property.GetValue(entity) != Guid.Empty)
             {
                 dbSet.Update(entity);
             }
@@ -41,7 +44,7 @@ namespace ADEPT_API.Repositories.Repository
             }
         }
 
-        public T Get(int id)
+        public T Get(Guid id)
         {
             return dbSet.Find(id);
         }
@@ -70,9 +73,37 @@ namespace ADEPT_API.Repositories.Repository
             return query.ToList();
         }
 
+        public PagedList<IQueryable<T>, T> GetPaginatedResults(int pageIndex, int pageSize, Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
+        {
+            IQueryable<T> query = dbSet;
+
+            if (filter is { })
+            {
+                query = query.Where(filter);
+            }
+
+            if (includeProperties != null)
+            {
+                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+            }
+
+            return query.ToPagedList(pageSize, pageIndex);
+        }
+
         public T GetFirstOrDefault(Expression<Func<T, bool>> filter = null, string includeProperties = null)
         {
-            IQueryable<T> query = dbSet ?? new List<T>().AsQueryable<T>();
+            IQueryable<T> query = dbSet;
+
+            if (query.FirstOrDefault() == null)
+                return null;
 
             if (filter != null)
             {
@@ -90,7 +121,7 @@ namespace ADEPT_API.Repositories.Repository
             return query.FirstOrDefault();
         }
 
-        public void Remove(int id)
+        public void Remove(Guid id)
         {
             T entity = dbSet.Find(id);
             Remove(entity);

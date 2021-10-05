@@ -8,8 +8,13 @@ using System.Threading.Tasks;
 
 namespace ADEPT_API.Repositories.Repository
 {
-    public class AuthRepository : BaseRepository<User>, IAuthRepository
+    public class UserRepository : BaseRepository<User>, IUserRepository 
     {
-        public AuthRepository(AdeptContext pContext) : base(pContext) { }
+        private readonly AdeptContext _context;
+
+        public UserRepository(AdeptContext pContext) : base(pContext)
+        {
+            _context = pContext;
+        }
     }
 }

@@ -20,10 +20,5 @@ namespace ADEPT_API.Services.Service
             _authRepository = pAuthRepository;
         }
 
-        public AuthUser Authenticate(string pToken)
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }
