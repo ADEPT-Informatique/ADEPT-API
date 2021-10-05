@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace ADEPT_API.Dto
 {
-    public class AuthenticateIn
+    public class UserSummary
     {
+        public Guid Id { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
     }

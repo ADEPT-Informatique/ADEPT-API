@@ -4,6 +4,7 @@ using ADEPT_API.Middleware;
 using ADEPT_API.Repositories.IRepository;
 using ADEPT_API.Repositories.Repository;
 using ADEPT_API.Services;
+using ADEPT_API.Services.IService;
 using ADEPT_API.Services.Service;
 using FirebaseAdmin;
 using FirebaseAdmin.Auth;
@@ -133,6 +134,11 @@ namespace ADEPT_API
 
         private void AddServicesAndRepositories(IServiceCollection services)
         {
+
+            // User
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserRepository, UserRepository>();
+
             // Auth
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IAuthRepository, AuthRepository>();

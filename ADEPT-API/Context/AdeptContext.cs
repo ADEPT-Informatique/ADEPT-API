@@ -23,6 +23,7 @@ namespace ADEPT_API.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(AdeptConfig.Get("AppSettings:connectionString"));
+            optionsBuilder.UseLazyLoadingProxies();
         }
     }
 }

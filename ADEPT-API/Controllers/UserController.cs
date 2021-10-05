@@ -14,18 +14,10 @@ namespace ADEPT_API.Controllers
     [Route("api/[controller]/[action]")]
     [ApiController]
     [Authorize]
-    public class UserController : ControllerBase
+    public class UserController : ApiController
     {
         public UserController()
         {
-        }
-
-
-
-        [HttpGet]
-        public IActionResult Test()
-        {
-            return Ok(this.User.Identity.Name);
         }
     }
 
