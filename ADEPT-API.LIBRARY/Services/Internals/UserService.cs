@@ -2,6 +2,7 @@
 using ADEPT_API.DATABASE.Models.Users.Enums;
 using ADEPT_API.DATABASE.Repositories;
 using ADEPT_API.LIBRARY.Services;
+using System;
 
 namespace ADEPT_API.Services.Internals
 {
@@ -13,7 +14,7 @@ namespace ADEPT_API.Services.Internals
 
         public UserService(IUserRepository pUserRepository)
         {
-            _userRepository = pUserRepository;
+            _userRepository = pUserRepository ?? throw new ArgumentNullException($"{nameof(UserService)} was expection a value for {nameof(pUserRepository)} but received null..");
         }
 
         public object UserRoles { get; private set; }

@@ -4,6 +4,7 @@ using ADEPT_API.LIBRARY.Dto.Users.Authentification;
 using ADEPT_API.LIBRARY.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 
 namespace ADEPT_API.Controllers
@@ -17,8 +18,8 @@ namespace ADEPT_API.Controllers
         private readonly IUserService _userService;
         public AuthController(IAuthService pAuthService, IUserService pUserService)
         {
-            _authService = pAuthService;
-            _userService = pUserService;
+            _authService = pAuthService ?? throw new ArgumentNullException($"{nameof(AuthController)} was expection a value for {nameof(pAuthService)} but received null..");
+            _userService = pUserService ?? throw new ArgumentNullException($"{nameof(AuthController)} was expection a value for {nameof(pUserService)} but received null..");
         }
 
         [HttpPost]
