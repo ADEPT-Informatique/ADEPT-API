@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31515.178
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31717.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ADEPT-API", "ADEPT-API.csproj", "{7BBC80B6-6930-4247-B612-795589335EB6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADEPT-API.DATABASE", "..\ADEPT-API.DATABASE\ADEPT-API.DATABASE.csproj", "{790376DC-0ECE-4370-BC3D-5CC599BDF66E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADEPT-API.LIBRARY", "..\ADEPT-API.LIBRARY\ADEPT-API.LIBRARY.csproj", "{E157CC7A-48FC-4706-B041-E146F8861E3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{7BBC80B6-6930-4247-B612-795589335EB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BBC80B6-6930-4247-B612-795589335EB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7BBC80B6-6930-4247-B612-795589335EB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{790376DC-0ECE-4370-BC3D-5CC599BDF66E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{790376DC-0ECE-4370-BC3D-5CC599BDF66E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{790376DC-0ECE-4370-BC3D-5CC599BDF66E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{790376DC-0ECE-4370-BC3D-5CC599BDF66E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E157CC7A-48FC-4706-B041-E146F8861E3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E157CC7A-48FC-4706-B041-E146F8861E3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E157CC7A-48FC-4706-B041-E146F8861E3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E157CC7A-48FC-4706-B041-E146F8861E3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
