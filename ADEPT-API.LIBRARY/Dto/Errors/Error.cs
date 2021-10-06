@@ -1,6 +1,8 @@
-﻿namespace ADEPT_API.Dto.Errors
+﻿using System;
+
+namespace ADEPT_API.Dto.Errors
 {
-    public class Error
+    public class Error : Exception
     {
         public string ErrorCode {  get; set; }
 

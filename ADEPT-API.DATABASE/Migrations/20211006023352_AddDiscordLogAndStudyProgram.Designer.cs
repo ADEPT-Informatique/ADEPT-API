@@ -4,14 +4,16 @@ using ADEPT_API.DATABASE.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ADEPT_API.DATABASE.Migrations
 {
     [DbContext(typeof(AdeptContext))]
-    partial class AdeptContextModelSnapshot : ModelSnapshot
+    [Migration("20211006023352_AddDiscordLogAndStudyProgram")]
+    partial class AddDiscordLogAndStudyProgram
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

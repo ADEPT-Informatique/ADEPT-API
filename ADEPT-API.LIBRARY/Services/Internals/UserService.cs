@@ -37,7 +37,6 @@ namespace ADEPT_API.Services.Internals
             _userRepository.Add(user);
             _userRepository.Save();
 
-
             return user;
         }
     }

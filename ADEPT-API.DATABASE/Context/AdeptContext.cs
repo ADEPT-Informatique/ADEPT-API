@@ -1,4 +1,5 @@
 ﻿using ADEPT_API.DATABASE.Models;
+using ADEPT_API.DATABASE.Models.Discord;
 using ADEPT_API.DATABASE.Models.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,8 +13,10 @@ namespace ADEPT_API.DATABASE.Context
         public AdeptContext(DbContextOptions<AdeptContext> options) : base(options) { }
 
         public DbSet<User> Users { get; set; }
-
         public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<DiscordStatusLog> DiscordStatuLogs { get; set; }
+        public DbSet<StudyProgram> StudyPrograms { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
