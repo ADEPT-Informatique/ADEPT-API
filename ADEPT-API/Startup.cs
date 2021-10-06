@@ -1,11 +1,8 @@
-using ADEPT_API.Context;
-using ADEPT_API.Extentions;
-using ADEPT_API.Middleware;
-using ADEPT_API.Repositories.IRepository;
-using ADEPT_API.Repositories.Repository;
-using ADEPT_API.Services;
-using ADEPT_API.Services.IService;
-using ADEPT_API.Services.Service;
+using ADEPT_API.DATABASE.Context;
+using ADEPT_API.DATABASE.Extensions;
+using ADEPT_API.LIBRARY.Configurations;
+using ADEPT_API.LIBRARY.Extensions;
+using ADEPT_API.LIBRARY.Middleware;
 using FirebaseAdmin;
 using FirebaseAdmin.Auth;
 using Google.Apis.Auth.OAuth2;
@@ -41,6 +38,9 @@ namespace ADEPT_API
         {
             services.AddAdeptServices();
             services.AddMappingServices();
+            services.AddDbContext<AdeptContext>(options => { options.UseSqlServer(AdeptConfig.Get("AppSettings:connectionString")); }, ServiceLifetime.Singleton);
+            services.AddRepositoryServices();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
              .AddJwtBearer(x =>
             {
@@ -56,12 +56,6 @@ namespace ADEPT_API
             });
 
             services.AddControllers();
-
-            services.AddDbContext<AdeptContext>(options =>
-            {
-                options.UseSqlServer(AdeptConfig.Get("AppSettings:connectionString"));
-                options.UseLazyLoadingProxies();
-            });
 
             services.AddSwaggerGen(c =>
             {
@@ -122,21 +116,7 @@ namespace ADEPT_API
 
                 dynamic kekw = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
                 AdeptConfig.TestToken = kekw.idToken;
-
-                //Arr�tez sur la ligne suivante pour obtenir l'idToken pour test
             }
-        }
-
-        private void AddServicesAndRepositories(IServiceCollection services)
-        {
-
-            // User
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IUserRepository, UserRepository>();
-
-            // Auth
-            services.AddTransient<IAuthService, AuthService>();
-            services.AddTransient<IAuthRepository, AuthRepository>();
         }
     }
 }

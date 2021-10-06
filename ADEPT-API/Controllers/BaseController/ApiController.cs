@@ -1,16 +1,12 @@
-﻿using ADEPT_API.Models;
-using ADEPT_API.Services;
+﻿using ADEPT_API.DATABASE.Models.Users;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ADEPT_API.Controllers
 {
     public class ApiController : ControllerBase
     {
-        public User CurrentUser {
+        public User CurrentUser
+        {
             get
             {
                 return (User)HttpContext.Items["User"];
