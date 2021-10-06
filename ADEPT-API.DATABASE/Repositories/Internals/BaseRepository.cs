@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ADEPT_API.Repositories.Internals
 {
-    public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
+    internal abstract class BaseRepository<T> : IBaseRepository<T> where T : class
     {
         protected readonly AdeptContext _context;
         internal DbSet<T> dbSet;

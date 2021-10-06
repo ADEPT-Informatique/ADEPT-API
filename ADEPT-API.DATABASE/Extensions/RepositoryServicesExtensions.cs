@@ -1,5 +1,6 @@
 ﻿using ADEPT_API.DATABASE.Repositories;
 using ADEPT_API.Repositories.Internals;
+using ADEPT_API.Repositories.Internals.MembreConfiance;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ADEPT_API.DATABASE.Extensions
@@ -10,6 +11,7 @@ namespace ADEPT_API.DATABASE.Extensions
         {
             services.AddTransient<IAuthRepository, AuthRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IQuestionRepository, QuestionRepository>();
         }
     }
 }

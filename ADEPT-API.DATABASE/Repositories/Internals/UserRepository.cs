@@ -4,7 +4,7 @@ using ADEPT_API.DATABASE.Repositories;
 
 namespace ADEPT_API.Repositories.Internals
 {
-    public class UserRepository : BaseRepository<User>, IUserRepository
+    internal class UserRepository : BaseRepository<User>, IUserRepository
     {
 
         public UserRepository(AdeptContext pContext) : base(pContext) { }
