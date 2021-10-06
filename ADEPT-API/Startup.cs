@@ -36,10 +36,10 @@ namespace ADEPT_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAdeptServices();
-            services.AddMappingServices();
             services.AddDbContext<AdeptContext>(options => { options.UseSqlServer(AdeptConfig.Get("AppSettings:connectionString")); }, ServiceLifetime.Singleton);
             services.AddRepositoryServices();
+            services.AddAdeptServices();
+            services.AddMappingServices();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
              .AddJwtBearer(x =>

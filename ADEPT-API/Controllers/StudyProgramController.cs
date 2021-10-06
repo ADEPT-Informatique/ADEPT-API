@@ -1,4 +1,7 @@
-﻿using ADEPT_API.LIBRARY.Services;
+﻿using ADEPT_API.Exceptions;
+using ADEPT_API.LIBRARY.Dto.Users;
+using ADEPT_API.LIBRARY.Exceptions.Interface;
+using ADEPT_API.LIBRARY.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -18,24 +21,27 @@ namespace ADEPT_API.Controllers
             _studyProgramService = pStudyProgramService;
         }
         [HttpGet]
-        [Authorize]
+        //[Authorize]
+        [ProducesResponseType(typeof(IEnumerable<StudyProgramDto>), 200)]
         public async Task<IActionResult> Get()
         {
             return Ok(_studyProgramService.GetAll());
         }
 
         [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> Post([FromBody] string value)
+        //[Authorize]
+        [ProducesResponseType(typeof(StudyProgramDto), 200)]
+        public async Task<IActionResult> Post([FromBody] StudyProgramCreateRequestDto body)
         {
-            throw new NotImplementedException();
+            return Ok(_studyProgramService.Create(body));
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("{id}/deletionimpact")]
+        [ProducesResponseType(typeof(int), 200)]
         public async Task<IActionResult> GetDeletionImpact([FromRoute] Guid id)
         {
-            throw new NotImplementedException();
+            return Ok(_studyProgramService.DeletionImpact(id));
         }
     }
 }
