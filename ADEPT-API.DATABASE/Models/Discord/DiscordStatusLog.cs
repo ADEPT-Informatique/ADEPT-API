@@ -31,7 +31,7 @@ namespace ADEPT_API.DATABASE.Models.Discord
 
         [ForeignKey(nameof(ReversionLog))]
         public Guid ReservionLogId { get; set; }
-        public DiscordStatusLog ReversionLog { get; set; }
+        public virtual DiscordStatusLog ReversionLog { get; set; }
 
     }
 }

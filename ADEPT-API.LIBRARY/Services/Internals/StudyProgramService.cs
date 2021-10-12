@@ -6,6 +6,7 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ADEPT_API.LIBRARY.Services.Internals
 {
@@ -22,12 +23,12 @@ namespace ADEPT_API.LIBRARY.Services.Internals
             _studyProgramRepository = pStudyProgramRepository ?? throw new ArgumentNullException($"{nameof(StudyProgramService)} was expecting a value for {nameof(pStudyProgramRepository)} but received null..");
             _userRepository = pUserRepository ?? throw new ArgumentNullException($"{nameof(StudyProgramService)} was expecting a value for {nameof(pUserRepository)} but received null..");
         }
-        public IEnumerable<StudyProgramDto> GetAll()
+        public async Task<IEnumerable<StudyProgramDto>> GetAllAsync()
         {
             return _mapper.Map<IEnumerable<StudyProgramDto>>(_studyProgramRepository.GetAll());
         }
 
-        public StudyProgramDto Create(StudyProgramCreateRequestDto pProgram)
+        public async Task<StudyProgramDto> CreateAsync(StudyProgramCreateRequestDto pProgram)
         {
 
             StudyProgram program = _studyProgramRepository.GetFirstOrDefault(x => x.Name.ToLower().Trim() == pProgram.Name.ToLower().Trim());
@@ -48,13 +49,9 @@ namespace ADEPT_API.LIBRARY.Services.Internals
             }
         }
 
-        public int DeletionImpact(Guid pProgramId)
+        public async Task<int> DeletionImpactAsync(Guid pProgramId)
         {
-            StudyProgram program = _studyProgramRepository.GetFirstOrDefault(x => x.Id == pProgramId);
-            if (program == null)
-            {
-                throw new NotFoundException("ERR_NOTFOUND_STUDYPROGRAM", $"Un Programme d'études avec le Id {pProgramId}");
-            }
+            _ = _studyProgramRepository.GetFirstOrDefault(x => x.Id == pProgramId) ?? throw new NotFoundException("ERR_NOTFOUND_STUDYPROGRAM", $"Un Programme d'études avec le Id {pProgramId}");
             return _userRepository.GetAll(x => x.Program.Id == pProgramId).ToList().Count;
         }
     }

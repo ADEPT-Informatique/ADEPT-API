@@ -25,7 +25,8 @@ namespace ADEPT_API.Controllers
         [ProducesResponseType(typeof(IEnumerable<StudyProgramDto>), 200)]
         public async Task<IActionResult> Get()
         {
-            return Ok(_studyProgramService.GetAll());
+            var response = _studyProgramService.GetAllAsync();
+            return Ok(response);
         }
 
         [HttpPost]
@@ -33,7 +34,8 @@ namespace ADEPT_API.Controllers
         [ProducesResponseType(typeof(StudyProgramDto), 200)]
         public async Task<IActionResult> Post([FromBody] StudyProgramCreateRequestDto body)
         {
-            return Ok(_studyProgramService.Create(body));
+            var response = _studyProgramService.CreateAsync(body);
+            return Ok(response);
         }
 
         //[Authorize]
@@ -41,7 +43,8 @@ namespace ADEPT_API.Controllers
         [ProducesResponseType(typeof(int), 200)]
         public async Task<IActionResult> GetDeletionImpact([FromRoute] Guid id)
         {
-            return Ok(_studyProgramService.DeletionImpact(id));
+            var response = _studyProgramService.DeletionImpactAsync(id);
+            return Ok(response);
         }
     }
 }

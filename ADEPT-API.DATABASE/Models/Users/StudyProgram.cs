@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ADEPT_API.DATABASE.Models.Users
 {
@@ -6,6 +7,7 @@ namespace ADEPT_API.DATABASE.Models.Users
     {
         public Guid Id { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
     }
