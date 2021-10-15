@@ -1,9 +1,10 @@
-﻿using System;
+﻿using ADEPT_API.DATABASE.Models.Markers;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace ADEPT_API.DATABASE.Models.MembreConfiance
 {
-  public class Question
+  public class Question : IBaseModel
   {
     [Key]
     public Guid Id {  get; set; }
