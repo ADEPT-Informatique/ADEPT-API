@@ -1,6 +1,6 @@
 ﻿using ADEPT_API.DATABASE.Models.Users;
-using ADEPT_API.LIBRARY.Dto.Users;
-using ADEPT_API.LIBRARY.Dto.Users.Authentification;
+using ADEPT_API.DATACONTRACTS.Dto.Users;
+using ADEPT_API.DATACONTRACTS.Dto.Users.Authentification;
 using ADEPT_API.LIBRARY.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

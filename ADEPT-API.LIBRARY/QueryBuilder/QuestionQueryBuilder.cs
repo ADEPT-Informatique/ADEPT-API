@@ -1,5 +1,5 @@
 ﻿using ADEPT_API.DATABASE.Models.MembreConfiance;
-using ADEPT_API.LIBRARY.Dto.MembreConfiances.Questions.Operations.Queries;
+using ADEPT_API.DATACONTRACTS.Dto.MembreConfiances.Questions.Operations.Queries;
 using ADEPT_API.LIBRARY.QueryBuilder.Abstracts;
 using LinqKit;
 using System;

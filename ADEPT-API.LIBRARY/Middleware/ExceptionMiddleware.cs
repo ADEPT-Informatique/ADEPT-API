@@ -1,4 +1,4 @@
-﻿using ADEPT_API.Dto.Errors;
+﻿using ADEPT_API.DATACONTRACTS.Dto.Errors;
 using ADEPT_API.LIBRARY.Exceptions.Interface;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;

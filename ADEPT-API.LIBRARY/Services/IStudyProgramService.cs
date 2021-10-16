@@ -1,4 +1,4 @@
-﻿using ADEPT_API.LIBRARY.Dto.Users;
+﻿using ADEPT_API.DATACONTRACTS.Dto.Users;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

@@ -1,7 +1,7 @@
-﻿using ADEPT_API.LIBRARY.Dto;
-using ADEPT_API.LIBRARY.Dto.MembreConfiances.Questions;
-using ADEPT_API.LIBRARY.Dto.MembreConfiances.Questions.Operations.Queries;
-using ADEPT_API.LIBRARY.Dto.MembreConfiances.Questions.Operations.Requests;
+﻿using ADEPT_API.DATACONTRACTS.Dto;
+using ADEPT_API.DATACONTRACTS.Dto.MembreConfiances.Questions;
+using ADEPT_API.DATACONTRACTS.Dto.MembreConfiances.Questions.Operations.Queries;
+using ADEPT_API.DATACONTRACTS.Dto.MembreConfiances.Questions.Operations.Requests;
 using ADEPT_API.LIBRARY.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;

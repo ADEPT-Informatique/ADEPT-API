@@ -1,4 +1,4 @@
-﻿using ADEPT_API.Dto.Errors;
+﻿using ADEPT_API.DATACONTRACTS.Dto.Errors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;

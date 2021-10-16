@@ -1,5 +1,5 @@
 ﻿using ADEPT_API.DATABASE.Models.Users;
-using ADEPT_API.LIBRARY.Dto.Users;
+using ADEPT_API.DATACONTRACTS.Dto.Users;
 using ADEPT_API.LIBRARY.Services.Internals.MembreConfiance.Mappers;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;

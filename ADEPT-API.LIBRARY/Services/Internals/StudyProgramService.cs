@@ -1,7 +1,7 @@
 ﻿using ADEPT_API.DATABASE.Models.Users;
 using ADEPT_API.DATABASE.Repositories;
 using ADEPT_API.Exceptions;
-using ADEPT_API.LIBRARY.Dto.Users;
+using ADEPT_API.DATACONTRACTS.Dto.Users;
 using AutoMapper;
 using System;
 using System.Collections.Generic;

@@ -1,5 +1,5 @@
-﻿using ADEPT_API.DATABASE.Models.MembreConfiance.Enums;
-using ADEPT_API.DATABASE.Models.Users;
+﻿using ADEPT_API.DATABASE.Models.Users;
+using ADEPT_API.DATACONTRACTS.Models.MembreConfiance.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -22,7 +22,7 @@ namespace ADEPT_API.DATABASE.Models.MembreConfiance
         public long CreatedTimestampUtc { get; set; }
 
         [ForeignKey(nameof(Reviewer))]
-        public Guid ReviewerUserId { get; set; }
+        public Guid? ReviewerUserId { get; set; }
 
         public virtual User Reviewer { get; set; }
 
