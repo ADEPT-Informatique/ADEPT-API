@@ -25,7 +25,8 @@ namespace ADEPT_API.LIBRARY.Services.Internals
         }
         public async Task<IEnumerable<StudyProgramDto>> GetAllAsync()
         {
-            return _mapper.Map<IEnumerable<StudyProgramDto>>(await _studyProgramRepository.GetAllAsync());
+            var result = await _studyProgramRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<StudyProgramDto>>(result);
         }
 
         public async Task<StudyProgramDto> CreateAsync(StudyProgramCreateRequestDto pProgram)
@@ -45,14 +46,17 @@ namespace ADEPT_API.LIBRARY.Services.Internals
                 };
                 await _studyProgramRepository.AddAsync(program);
                 await _studyProgramRepository.SaveAsync();
-                return _mapper.Map<StudyProgram, StudyProgramDto>(program);
+                var result = program;
+                return _mapper.Map<StudyProgram, StudyProgramDto>(result);
             }
         }
 
         public async Task<int> DeletionImpactAsync(Guid pProgramId)
         {
             _ = _studyProgramRepository.GetFirstOrDefaultAsync(x => x.Id == pProgramId) ?? throw new NotFoundException(nameof(StudyProgram).ToUpper(), $"Un Programme d'études avec le Id {pProgramId}");
-            return (await _userRepository.GetAllAsync(x => x.Program.Id == pProgramId)).ToList().Count;
+            var result = await _userRepository.GetAllAsync(x => x.Program.Id == pProgramId);
+            return result.Count();
+
         }
     }
 }
