@@ -17,6 +17,7 @@ namespace ADEPT_API.DATABASE.Context
         public DbSet<DiscordStatusLog> DiscordStatuLogs { get; set; }
         public DbSet<StudyProgram> StudyPrograms { get; set; }
         public DbSet<Question> Questions { get; set; }
+        public DbSet<Application> Applications {  get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -28,6 +29,14 @@ namespace ADEPT_API.DATABASE.Context
 
                 optionsBuilder.UseSqlServer(configuration["AppSettings:connectionString"]);
             }
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<ApplicationQuestion>().HasKey(x => new { x.ApplicationId, x.QuestionId });
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

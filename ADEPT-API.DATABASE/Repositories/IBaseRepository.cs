@@ -14,7 +14,7 @@ namespace ADEPT_API.DATABASE.Repositories
         Task<IEnumerable<TEntity>> GetAllAsync(
           Expression<Func<TEntity, bool>> filter = null,
           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-          string includeProperties = null
+          IncludeResolver<TEntity> includeResolver = null
           );
 
         Task<PagedList<IQueryable<TEntity>, TEntity>> GetPaginatedResultsAsync(
@@ -22,12 +22,12 @@ namespace ADEPT_API.DATABASE.Repositories
           int pageSize,
           Expression<Func<TEntity, bool>> filter = null,
           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-          string includeProperties = null
+          IncludeResolver<TEntity> includeResolver = null
           );
 
         Task<TEntity> GetFirstOrDefaultAsync(
          Expression<Func<TEntity, bool>> filter = null,
-         string includeProperties = null
+         IncludeResolver<TEntity> includeResolver = null
          );
 
         Task AddAsync(TEntity entity);

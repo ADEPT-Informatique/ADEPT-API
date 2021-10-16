@@ -1,4 +1,5 @@
-﻿using ADEPT_API.DATABASE.Context;
+﻿using ADEPT_API.DATABASE;
+using ADEPT_API.DATABASE.Context;
 using ADEPT_API.DATABASE.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Sakura.AspNetCore;
@@ -10,25 +11,25 @@ using System.Threading.Tasks;
 
 namespace ADEPT_API.Repositories.Internals
 {
-    internal abstract class BaseRepository<T> : IBaseRepository<T> where T : class
+    internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
         protected readonly AdeptContext _context;
-        internal DbSet<T> dbSet;
+        internal DbSet<TEntity> dbSet;
 
         protected virtual AdeptContext Context { get { return _context; } }
 
         protected BaseRepository(AdeptContext pContext)
         {
-            _context = pContext ?? throw new ArgumentNullException($"{nameof(BaseRepository<T>)} was expection a value for {nameof(pContext)} but received null..");
-            this.dbSet = _context.Set<T>();
+            _context = pContext ?? throw new ArgumentNullException($"{nameof(BaseRepository<TEntity>)} was expection a value for {nameof(pContext)} but received null..");
+            this.dbSet = _context.Set<TEntity>();
         }
 
-        public async Task AddAsync(T entity)
+        public async Task AddAsync(TEntity entity)
         {
             await dbSet.AddAsync(entity);
         }
 
-        public void AddOrUpdate(T entity)
+        public void AddOrUpdate(TEntity entity)
         {
             var type = entity.GetType();
             var property = type.GetProperties().FirstOrDefault(x => x.Name == "Id");
@@ -42,53 +43,47 @@ namespace ADEPT_API.Repositories.Internals
             }
         }
 
-        public async Task<T> GetAsync(Guid id)
+        public async Task<TEntity> GetAsync(Guid id)
         {
             return await dbSet.FindAsync(id);
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
+        public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, IncludeResolver<TEntity> includeResolver = null)
         {
-            IQueryable<T> query = dbSet;
+            IQueryable<TEntity> query = dbSet;
 
             if (filter != null)
             {
                 query = query.Where(filter);
             }
 
-            if (includeProperties != null)
+            if (includeResolver is { })
             {
-                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    query = query.Include(includeProp);
-                }
+                query = includeResolver(query);
             }
 
-            if (orderBy != null)
+            if (orderBy is { })
             {
                 return await orderBy(query).ToListAsync();
             }
             return await query.ToListAsync();
         }
 
-        public async Task<PagedList<IQueryable<T>, T>> GetPaginatedResultsAsync(int pageIndex, int pageSize, Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
+        public async Task<PagedList<IQueryable<TEntity>, TEntity>> GetPaginatedResultsAsync(int pageIndex, int pageSize, Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, IncludeResolver<TEntity> includeResolver = null)
         {
-            IQueryable<T> query = dbSet;
+            IQueryable<TEntity> query = dbSet;
 
             if (filter is { })
             {
                 query = query.Where(filter);
             }
 
-            if (includeProperties != null)
+            if (includeResolver is { })
             {
-                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    query = query.Include(includeProp);
-                }
+                query = includeResolver(query);
             }
 
-            if (orderBy != null)
+            if (orderBy is { })
             {
                 query = orderBy(query);
             }
@@ -96,21 +91,18 @@ namespace ADEPT_API.Repositories.Internals
             return await query.ToPagedListAsync(pageSize, pageIndex);
         }
 
-        public async Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> filter = null, string includeProperties = null)
+        public async Task<TEntity> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter = null, IncludeResolver<TEntity> includeResolver = null)
         {
-            IQueryable<T> query = dbSet;
+            IQueryable<TEntity> query = dbSet;
 
-            if (filter != null)
+            if (filter is { })
             {
                 query = query.Where(filter);
             }
 
-            if (includeProperties != null)
+            if (includeResolver is { })
             {
-                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    query = query.Include(includeProp);
-                }
+                query = includeResolver(query);
             }
 
             return await query.FirstOrDefaultAsync();
@@ -118,16 +110,16 @@ namespace ADEPT_API.Repositories.Internals
 
         public void Remove(Guid id)
         {
-            T entity = dbSet.Find(id);
+            TEntity entity = dbSet.Find(id);
             Remove(entity);
         }
 
-        public void Remove(T entity)
+        public void Remove(TEntity entity)
         {
             dbSet.Remove(entity);
         }
 
-        public void RemoveRange(IEnumerable<T> entity)
+        public void RemoveRange(IEnumerable<TEntity> entity)
         {
             dbSet.RemoveRange(entity);
         }
