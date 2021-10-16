@@ -54,8 +54,10 @@ namespace ADEPT_API
                 };
             });
 
-            services.AddControllers();
-
+            services.AddControllers().ConfigureApiBehaviorOptions(options =>
+            {
+                options.InvalidModelStateResponseFactory = ModelValidatorMiddleware.ValidateModelState;
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ADEPT_API", Version = "v1" });
@@ -88,7 +90,6 @@ namespace ADEPT_API
 
             app.UseMiddleware<AuthenticationMiddleWare>();
             app.UseMiddleware<ExceptionMiddleware>();
-            app.UseMiddleware<ModelValidatorMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

@@ -1,5 +1,4 @@
 ﻿using ADEPT_API.DATABASE.Context;
-using ADEPT_API.DATABASE.Models.Markers;
 using ADEPT_API.DATABASE.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Sakura.AspNetCore;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ADEPT_API.Repositories.Internals
 {
-    internal abstract class BaseRepository<T> : IBaseRepository<T> where T : class, IBaseModel
+    internal abstract class BaseRepository<T> : IBaseRepository<T> where T : class
     {
         protected readonly AdeptContext _context;
         internal DbSet<T> dbSet;
@@ -24,14 +23,16 @@ namespace ADEPT_API.Repositories.Internals
             this.dbSet = _context.Set<T>();
         }
 
-        public async void Add(T entity)
+        public async Task AddAsync(T entity)
         {
-           await dbSet.AddAsync(entity);
+            await dbSet.AddAsync(entity);
         }
 
         public void AddOrUpdate(T entity)
         {
-            if (entity.Id != Guid.Empty)
+            var type = entity.GetType();
+            var property = type.GetProperties().FirstOrDefault(x => x.Name == "Id");
+            if (property != null && (Guid)property.GetValue(entity) != Guid.Empty)
             {
                 dbSet.Update(entity);
             }
@@ -41,12 +42,12 @@ namespace ADEPT_API.Repositories.Internals
             }
         }
 
-        public async Task<T> Get(Guid id)
+        public async Task<T> GetAsync(Guid id)
         {
             return await dbSet.FindAsync(id);
         }
 
-        public async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
+        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
         {
             IQueryable<T> query = dbSet;
 
@@ -70,7 +71,7 @@ namespace ADEPT_API.Repositories.Internals
             return await query.ToListAsync();
         }
 
-        public async Task<PagedList<IQueryable<T>, T>> GetPaginatedResults(int pageIndex, int pageSize, Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
+        public async Task<PagedList<IQueryable<T>, T>> GetPaginatedResultsAsync(int pageIndex, int pageSize, Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
         {
             IQueryable<T> query = dbSet;
 
@@ -95,7 +96,7 @@ namespace ADEPT_API.Repositories.Internals
             return await query.ToPagedListAsync(pageSize, pageIndex);
         }
 
-        public async Task<T> GetFirstOrDefault(Expression<Func<T, bool>> filter = null, string includeProperties = null)
+        public async Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> filter = null, string includeProperties = null)
         {
             IQueryable<T> query = dbSet;
 

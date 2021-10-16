@@ -5,6 +5,9 @@ namespace ADEPT_API.Exceptions
 {
     public class AlreadyExistsException : AdeptException
     {
-        public AlreadyExistsException(string pErrorCode, string pMessage) : base(pErrorCode, pMessage, HttpStatusCode.Conflict) { }
+        public AlreadyExistsException(string pEntityName, string pMessage) : base("ERR_EXIST", pMessage, HttpStatusCode.Conflict) 
+        {
+            base.ErrorCode = $"{base.ErrorCode}_{pEntityName}";
+        }
     }
 }

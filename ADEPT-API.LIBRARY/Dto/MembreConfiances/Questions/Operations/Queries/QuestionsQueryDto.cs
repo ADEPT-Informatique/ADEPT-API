@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace ADEPT_API.LIBRARY.Dto.MembreConfiances.Questions.Operations.Queries
@@ -7,7 +8,7 @@ namespace ADEPT_API.LIBRARY.Dto.MembreConfiances.Questions.Operations.Queries
     public class QuestionsQueryDto
     {
         [DataMember]
-        public IEnumerable<string> Ids { get; set; }
+        public IEnumerable<Guid> Ids { get; set; }
 
         [DataMember]
         public bool? IsActivated { get; set; }
