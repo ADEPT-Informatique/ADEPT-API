@@ -1,4 +1,5 @@
-﻿using ADEPT_API.DATABASE.Context;
+﻿using ADEPT_API.DATABASE;
+using ADEPT_API.DATABASE.Context;
 using ADEPT_API.DATABASE.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Sakura.AspNetCore;
@@ -10,25 +11,25 @@ using System.Threading.Tasks;
 
 namespace ADEPT_API.Repositories.Internals
 {
-    internal abstract class BaseRepository<T> : IBaseRepository<T> where T : class
+    internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
         protected readonly AdeptContext _context;
-        internal DbSet<T> dbSet;
+        internal DbSet<TEntity> dbSet;
 
         protected virtual AdeptContext Context { get { return _context; } }
 
         protected BaseRepository(AdeptContext pContext)
         {
-            _context = pContext ?? throw new ArgumentNullException($"{nameof(BaseRepository<T>)} was expection a value for {nameof(pContext)} but received null..");
-            this.dbSet = _context.Set<T>();
+            _context = pContext ?? throw new ArgumentNullException($"{nameof(BaseRepository<TEntity>)} was expection a value for {nameof(pContext)} but received null..");
+            this.dbSet = _context.Set<TEntity>();
         }
 
-        public void Add(T entity)
+        public async Task AddAsync(TEntity entity)
         {
-            dbSet.Add(entity);
+            await dbSet.AddAsync(entity);
         }
 
-        public void AddOrUpdate(T entity)
+        public void AddOrUpdate(TEntity entity)
         {
             var type = entity.GetType();
             var property = type.GetProperties().FirstOrDefault(x => x.Name == "Id");
@@ -42,95 +43,83 @@ namespace ADEPT_API.Repositories.Internals
             }
         }
 
-        public T Get(Guid id)
+        public async Task<TEntity> GetAsync(Guid id)
         {
-            return dbSet.Find(id);
+            return await dbSet.FindAsync(id);
         }
 
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
+        public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, IncludeResolver<TEntity> includeResolver = null)
         {
-            IQueryable<T> query = dbSet;
+            IQueryable<TEntity> query = dbSet;
 
             if (filter != null)
             {
                 query = query.Where(filter);
             }
 
-            if (includeProperties != null)
+            if (includeResolver is { })
             {
-                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    query = query.Include(includeProp);
-                }
+                query = includeResolver(query);
             }
 
-            if (orderBy != null)
+            if (orderBy is { })
             {
-                return orderBy(query).ToList();
+                return await orderBy(query).ToListAsync();
             }
-            return query.ToList();
+            return await query.ToListAsync();
         }
 
-        public PagedList<IQueryable<T>, T> GetPaginatedResults(int pageIndex, int pageSize, Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
+        public async Task<PagedList<IQueryable<TEntity>, TEntity>> GetPaginatedResultsAsync(int pageIndex, int pageSize, Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, IncludeResolver<TEntity> includeResolver = null)
         {
-            IQueryable<T> query = dbSet;
+            IQueryable<TEntity> query = dbSet;
 
             if (filter is { })
             {
                 query = query.Where(filter);
             }
 
-            if (includeProperties != null)
+            if (includeResolver is { })
             {
-                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    query = query.Include(includeProp);
-                }
+                query = includeResolver(query);
             }
 
-            if (orderBy != null)
+            if (orderBy is { })
             {
                 query = orderBy(query);
             }
 
-            return query.ToPagedList(pageSize, pageIndex);
+            return await query.ToPagedListAsync(pageSize, pageIndex);
         }
 
-        public T GetFirstOrDefault(Expression<Func<T, bool>> filter = null, string includeProperties = null)
+        public async Task<TEntity> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter = null, IncludeResolver<TEntity> includeResolver = null)
         {
-            IQueryable<T> query = dbSet;
+            IQueryable<TEntity> query = dbSet;
 
-            if (query.FirstOrDefault() == null)
-                return null;
-
-            if (filter != null)
+            if (filter is { })
             {
                 query = query.Where(filter);
             }
 
-            if (includeProperties != null)
+            if (includeResolver is { })
             {
-                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    query = query.Include(includeProp);
-                }
+                query = includeResolver(query);
             }
 
-            return query.FirstOrDefault();
+            return await query.FirstOrDefaultAsync();
         }
 
         public void Remove(Guid id)
         {
-            T entity = dbSet.Find(id);
+            TEntity entity = dbSet.Find(id);
             Remove(entity);
         }
 
-        public void Remove(T entity)
+        public void Remove(TEntity entity)
         {
             dbSet.Remove(entity);
         }
 
-        public void RemoveRange(IEnumerable<T> entity)
+        public void RemoveRange(IEnumerable<TEntity> entity)
         {
             dbSet.RemoveRange(entity);
         }

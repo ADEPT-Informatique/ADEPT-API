@@ -34,7 +34,7 @@ namespace ADEPT_API.Services.Internals
                 Role = Roles.Membre
             });
 
-            _userRepository.Add(user);
+            _userRepository.AddAsync(user);
             _userRepository.Save();
 
             return user;

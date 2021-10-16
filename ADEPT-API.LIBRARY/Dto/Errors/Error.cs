@@ -2,7 +2,7 @@
 
 namespace ADEPT_API.Dto.Errors
 {
-    public class Error : Exception
+    public class Error
     {
         public string ErrorCode {  get; set; }
 

@@ -25,7 +25,6 @@ namespace ADEPT_API
 {
     public class Startup
     {
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -55,8 +54,10 @@ namespace ADEPT_API
                 };
             });
 
-            services.AddControllers();
-
+            services.AddControllers().ConfigureApiBehaviorOptions(options =>
+            {
+                options.InvalidModelStateResponseFactory = ModelValidatorMiddleware.ValidateModelState;
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ADEPT_API", Version = "v1" });
@@ -89,7 +90,6 @@ namespace ADEPT_API
 
             app.UseMiddleware<AuthenticationMiddleWare>();
             app.UseMiddleware<ExceptionMiddleware>();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
@@ -109,7 +109,6 @@ namespace ADEPT_API
                     returnSecureToken = true
                 });
                 var data = new StringContent(json, Encoding.UTF8, "application/json");
-
 
 
                 var response = await client.PostAsync("https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=" + apiKey, data);

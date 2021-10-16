@@ -22,7 +22,7 @@ namespace ADEPT_API.LIBRARY.Middleware
             ClaimsPrincipal user = pContext.User;
             string id = user.Claims.FirstOrDefault(x => x.Type.ToUpper() == "USER_ID")?.Value;
 
-            User authenticatedUser = authRepository.GetFirstOrDefault(x => x.FireBaseID == id);
+            User authenticatedUser = await authRepository.GetFirstOrDefaultAsync(x => x.FireBaseID == id);
             pContext.Items["User"] = authenticatedUser;
 
             await _next(pContext);
