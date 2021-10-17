@@ -35,3 +35,4 @@ jobs:
         with:
           name: AdeptApi
           path: /home/runner/work/Playground/Playground/src/ADEPT-API/ADEPT-API/bin/Release/net5.0/
+
