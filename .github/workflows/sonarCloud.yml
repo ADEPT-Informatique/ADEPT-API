@@ -11,7 +11,10 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: ['5.0.x']
     steps:
       - name: Set up JDK 11
         uses: actions/setup-java@v1
@@ -20,12 +23,18 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          dotnet-version: ${{ matrix.dotnet-version }}
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
         with:
           path: ~\sonar\cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
+          
       - name: Cache SonarCloud scanner
         id: cache-sonar-scanner
         uses: actions/cache@v1
@@ -46,5 +55,12 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"ADEPT-Informatique_ADEPT-API" /o:"adept-informatique" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build
+        # dotnet build
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+      - name: Publish
+        run: dotnet publish --configuration Release --no-restore
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: AdeptApi
+          path: /home/runner/work/ADEPT-API/ADEPT-API/ADEPT-API/bin/Release/net5.0/publish/
