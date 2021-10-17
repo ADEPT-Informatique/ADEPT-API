@@ -1,17 +1,15 @@
-﻿using ADEPT_API.DATABASE.Models.MembreConfiance;
-using ADEPT_API.DATACONTRACTS.Dto;
+﻿using ADEPT_API.DATACONTRACTS.Dto;
 using ADEPT_API.DATACONTRACTS.Dto.MembreConfiances.Applications;
 using ADEPT_API.DATACONTRACTS.Dto.MembreConfiances.Applications.Operations.Queries;
 using ADEPT_API.DATACONTRACTS.Dto.MembreConfiances.Applications.Operations.Requests;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ADEPT_API.DATABASE.Repositoriese
+namespace ADEPT_API.LIBRARY.Services
 {
-    public interface IApplicationRepository
+    public interface IApplicationService
     {
         /// <summary>
         /// 
@@ -25,20 +23,12 @@ namespace ADEPT_API.DATABASE.Repositoriese
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        Task<ApplicationDto> GetApplicationByIdAsync(Guid id, CancellationToken cancellationToken);
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <param name="applicationsQueryDto"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<PaginatedCollectionResultDto<ApplicationDto>> GetApplicationsByPageByQuery(int pageIndex, int pageSize, ApplicationsQueryDto applicationsQueryDto, CancellationToken cancellationToken);
+        Task<PaginatedCollectionResultDto<ApplicationDto>> GetApplicationsByPageByQueryAsync(int pageIndex, int pageSize, ApplicationsQueryDto applicationsQueryDto, CancellationToken cancellationToken);
 
         /// <summary>
         /// 
@@ -46,23 +36,17 @@ namespace ADEPT_API.DATABASE.Repositoriese
         /// <param name="applicationsQueryDto"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<IEnumerable<ApplicationDto>> GetApplicationsByQuery(ApplicationsQueryDto applicationsQueryDto, CancellationToken cancellationToken);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="queryable"></param>
-        /// <returns></returns>
-        IQueryable<Application> IncludeAll(IQueryable<Application> queryable);
+        Task<IEnumerable<ApplicationDto>> GetApplicationsByQueryAsync(ApplicationsQueryDto applicationsQueryDto, CancellationToken cancellationToken);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="applicationId"></param>
+        /// <param name="userId"></param>
         /// <param name="applicationUpdateRequestDto"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<ApplicationDto> UpdateApplicationAsync(Guid applicationId, ApplicationUpdateRequestDto applicationUpdateRequestDto, CancellationToken cancellationToken);
+        Task<ApplicationDto> UpdateApplicationAsync(Guid applicationId, Guid userId, ApplicationUpdateRequestDto applicationUpdateRequestDto, CancellationToken cancellationToken);
 
         /// <summary>
         /// 
@@ -72,6 +56,15 @@ namespace ADEPT_API.DATABASE.Repositoriese
         /// <param name="applicationUpdateStateRequestDto"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<ApplicationDto> UpdateApplicationStateAsync(Guid applicationId, ApplicationUpdateStateRequestDto applicationUpdateStateRequestDto, CancellationToken cancellationToken, Guid? reviewedByUserId = null);
+        Task<ApplicationDto> UpdateApplicationStateAsync(Guid applicationId, Guid reviewedByUserId, ApplicationUpdateStateRequestDto applicationUpdateStateRequestDto, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="applicationId"></param>
+        /// <param name="userId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<ApplicationDto> CancelApplicationAsync(Guid applicationId, Guid userId, CancellationToken cancellationToken);
     }
 }

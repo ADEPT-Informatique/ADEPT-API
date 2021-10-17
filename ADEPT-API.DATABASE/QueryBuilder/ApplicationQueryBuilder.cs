@@ -1,12 +1,12 @@
 ﻿using ADEPT_API.DATABASE.Models.MembreConfiance;
 using ADEPT_API.DATACONTRACTS.Dto.MembreConfiances.Applications.Operations.Queries;
-using ADEPT_API.LIBRARY.QueryBuilder.Abstracts;
+using ADEPT_API.DATABASE.QueryBuilder.Abstracts;
 using LinqKit;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace ADEPT_API.LIBRARY.QueryBuilder
+namespace ADEPT_API.DATABASE.QueryBuilder
 {
     public class ApplicationQueryBuilder : QueryBuilder<Application>
     {
@@ -29,7 +29,7 @@ namespace ADEPT_API.LIBRARY.QueryBuilder
                 _query = applicationQueryDto.ReviewerUserIds is null || !applicationQueryDto.ReviewerUserIds.Any() ? _query : _query is null ? queryReviewerUserIds : _query.And(queryReviewerUserIds);
 
                 //Query ApplicationStates
-                Expression<Func<Application, bool>> queryApplicationStates = entity => applicationQueryDto.States.Contains(entity.States);
+                Expression<Func<Application, bool>> queryApplicationStates = entity => applicationQueryDto.States.Contains(entity.State);
                 _query = applicationQueryDto.States is null || !applicationQueryDto.States.Any() ? _query : _query is null ? queryApplicationStates : _query.And(queryApplicationStates);
             }
 

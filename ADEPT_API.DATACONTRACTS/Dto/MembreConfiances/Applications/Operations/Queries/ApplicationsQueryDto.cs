@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using ADEPT_API.DATACONTRACTS.Dto.Queries;
 
 namespace ADEPT_API.DATACONTRACTS.Dto.MembreConfiances.Applications.Operations.Queries
 {
@@ -19,5 +20,8 @@ namespace ADEPT_API.DATACONTRACTS.Dto.MembreConfiances.Applications.Operations.Q
 
         [DataMember]
         public IEnumerable<ApplicationStates> States { get; set; }
+
+        [DataMember]
+        public TimestampQueryDto CreatedTimestampUtcQuery { get; set; }
     }
 }

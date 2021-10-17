@@ -1,6 +1,7 @@
 ﻿using ADEPT_API.DATABASE.Repositories;
 using ADEPT_API.DATABASE.Repositories.Internals;
 using ADEPT_API.DATABASE.Repositories.Internals.MembreConfiance;
+using ADEPT_API.DATABASE.Repositoriese;
 using ADEPT_API.Repositories.Internals;
 using ADEPT_API.Repositories.Internals.MembreConfiance;
 using Microsoft.Extensions.DependencyInjection;

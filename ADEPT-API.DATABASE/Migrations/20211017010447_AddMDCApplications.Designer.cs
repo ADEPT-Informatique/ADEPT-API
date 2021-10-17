@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ADEPT_API.DATABASE.Migrations
 {
     [DbContext(typeof(AdeptContext))]
-    [Migration("20211016183749_AddMDCApplications")]
+    [Migration("20211017010447_AddMDCApplications")]
     partial class AddMDCApplications
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,10 +71,10 @@ namespace ADEPT_API.DATABASE.Migrations
                     b.Property<long?>("ReviewedTimestampUtc")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid>("ReviewerUserId")
+                    b.Property<Guid?>("ReviewerUserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("States")
+                    b.Property<int>("State")
                         .HasColumnType("int");
 
                     b.Property<Guid>("UserId")
@@ -227,9 +227,7 @@ namespace ADEPT_API.DATABASE.Migrations
                 {
                     b.HasOne("ADEPT_API.DATABASE.Models.Users.User", "Reviewer")
                         .WithMany()
-                        .HasForeignKey("ReviewerUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ReviewerUserId");
 
                     b.HasOne("ADEPT_API.DATABASE.Models.Users.User", "User")
                         .WithMany()

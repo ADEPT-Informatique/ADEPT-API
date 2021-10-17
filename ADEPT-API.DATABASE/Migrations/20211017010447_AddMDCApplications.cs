@@ -13,9 +13,9 @@ namespace ADEPT_API.DATABASE.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    States = table.Column<int>(type: "int", nullable: false),
+                    State = table.Column<int>(type: "int", nullable: false),
                     CreatedTimestampUtc = table.Column<long>(type: "bigint", nullable: false),
-                    ReviewerUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ReviewerUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ReviewedTimestampUtc = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>

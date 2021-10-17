@@ -15,7 +15,7 @@ namespace ADEPT_API.DATABASE.Models.MembreConfiance
 
         public virtual User User { get; set; }
 
-        public ApplicationStates States { get; set; }
+        public ApplicationStates State { get; set; }
 
         public virtual ICollection<ApplicationQuestion> ApplicationQuestions { get; set; }
 

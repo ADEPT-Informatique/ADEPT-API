@@ -1,12 +1,12 @@
 ﻿using ADEPT_API.DATABASE.Models.MembreConfiance;
 using ADEPT_API.DATACONTRACTS.Dto.MembreConfiances.Questions.Operations.Queries;
-using ADEPT_API.LIBRARY.QueryBuilder.Abstracts;
+using ADEPT_API.DATABASE.QueryBuilder.Abstracts;
 using LinqKit;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace ADEPT_API.LIBRARY.QueryBuilder
+namespace ADEPT_API.DATABASE.QueryBuilder
 {
     public class QuestionQueryBuilder : QueryBuilder<Question>
     {

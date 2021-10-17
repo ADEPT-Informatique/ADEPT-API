@@ -14,7 +14,7 @@ namespace ADEPT_API.Controllers.MembreConfiance
 {
     [Route("api/membreconfiance/questions")]
     [ApiController]
-    public class QuestionsController : ControllerBase
+    public class QuestionsController : ApiController
     {
         private readonly IQuestionService _questionsService;
 

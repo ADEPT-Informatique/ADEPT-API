@@ -16,6 +16,7 @@ namespace ADEPT_API.LIBRARY.Extensions
         {
             config.CreateMap<StudyProgram, StudyProgramDto>();
             config.AddProfile(new QuestionMappings());
+            config.AddProfile(new ApplicationMappings());
         });
 
         return mapperConfiguration.CreateMapper();

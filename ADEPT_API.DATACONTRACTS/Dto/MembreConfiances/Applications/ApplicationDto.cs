@@ -16,7 +16,7 @@ namespace ADEPT_API.DATACONTRACTS.Dto.MembreConfiances.Applications
         public UserSummaryDto User { get; set; }
 
         [DataMember]
-        public ApplicationStates States { get; set; }
+        public ApplicationStates State { get; set; }
 
         [DataMember]
         public IEnumerable<ApplicationQuestionDto> ApplicationQuestions { get; set; }

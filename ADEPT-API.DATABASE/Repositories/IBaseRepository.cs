@@ -1,4 +1,5 @@
-﻿using Sakura.AspNetCore;
+﻿using ADEPT_API.DATACONTRACTS.Enums;
+using Sakura.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,8 @@ namespace ADEPT_API.DATABASE.Repositories
         Task<TEntity> GetAsync(Guid id);
         Task<IEnumerable<TEntity>> GetAllAsync(
           Expression<Func<TEntity, bool>> filter = null,
-          Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+          string orderField = null,
+          OrderDirections orderDirection = OrderDirections.Asc,
           IncludeResolver<TEntity> includeResolver = null
           );
 
@@ -21,7 +23,8 @@ namespace ADEPT_API.DATABASE.Repositories
           int pageIndex,
           int pageSize,
           Expression<Func<TEntity, bool>> filter = null,
-          Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+          string orderField = null,
+          OrderDirections orderDirection = OrderDirections.Asc,
           IncludeResolver<TEntity> includeResolver = null
           );
 

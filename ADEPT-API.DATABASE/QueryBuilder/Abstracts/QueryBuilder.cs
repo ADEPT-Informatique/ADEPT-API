@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace ADEPT_API.LIBRARY.QueryBuilder.Abstracts
+namespace ADEPT_API.DATABASE.QueryBuilder.Abstracts
 {
     public abstract class QueryBuilder<TSourceEntity>
     {
