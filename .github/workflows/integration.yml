@@ -1,0 +1,20 @@
+name: Continuous Integration Pipeline
+
+on:
+  pull_request:
+    branches: [dev]
+
+jobs:
+  build:
+  runs-on: unbuntu-latest
+
+steps:
+  - uses: actions/checkout@v2
+  - name: Setup DotNet 5.0.x Version
+    users: actions/setup-dotnet@v1
+    with:
+        dotnet-version: '5.0.x'
+  - name: Instal Dependencies
+    run: dotnet restore
+  - name: Build
+    run: dotnet restore
