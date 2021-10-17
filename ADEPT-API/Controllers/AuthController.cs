@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ADEPT_API.Controllers
 {
@@ -23,7 +25,7 @@ namespace ADEPT_API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Authenticate(AuthenticateInDto authenticateInDto)
+        public async Task<IActionResult> Authenticate(AuthenticateInDto authenticateInDto, CancellationToken cancellationToken)
         {
             // Création d'un nouvel utilisateur si celui-ci est Authorized, mais où le current user est null.
             // L'utilisation du body n'est nécessaire que pour la création du compte, puisque l'information est plus complexe à obtenir en back-end qu'en front-end.
@@ -41,7 +43,7 @@ namespace ADEPT_API.Controllers
             }
             else
             {
-                User newUser = _userService.CreateUser(this.User.Claims.FirstOrDefault(x => x.Type.ToUpper() == "USER_ID")?.Value, authenticateInDto.Username, authenticateInDto.Email);
+                var newUser = await _userService.CreateFirebaseUserAsync(this.User.Claims.FirstOrDefault(x => x.Type.ToUpper() == "USER_ID")?.Value, authenticateInDto, cancellationToken);
                 user = new UserSummaryDto()
                 {
                     Id = newUser.Id,

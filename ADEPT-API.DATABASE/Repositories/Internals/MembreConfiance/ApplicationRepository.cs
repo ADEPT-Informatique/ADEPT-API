@@ -1,13 +1,13 @@
 ﻿using ADEPT_API.DATABASE.Context;
 using ADEPT_API.DATABASE.Models.MembreConfiance;
 using ADEPT_API.DATABASE.Models.Users;
-using ADEPT_API.DATABASE.Models.Users.Enums;
 using ADEPT_API.DATABASE.QueryBuilder;
 using ADEPT_API.DATABASE.Repositoriese;
 using ADEPT_API.DATACONTRACTS.Dto;
 using ADEPT_API.DATACONTRACTS.Dto.MembreConfiances.Applications;
 using ADEPT_API.DATACONTRACTS.Dto.MembreConfiances.Applications.Operations.Queries;
 using ADEPT_API.DATACONTRACTS.Dto.MembreConfiances.Applications.Operations.Requests;
+using ADEPT_API.DATACONTRACTS.Dto.Users.Enums;
 using ADEPT_API.DATACONTRACTS.Models.MembreConfiance.Enums;
 using ADEPT_API.Repositories.Internals;
 using AutoMapper;
@@ -79,7 +79,7 @@ namespace ADEPT_API.DATABASE.Repositories.Internals.MembreConfiance
             await base.AddAsync(applicationToCreate);
             await base.SaveAsync();
 
-            return _mapper.Map<Application,ApplicationDto>(applicationToCreate);
+            return _mapper.Map<Application, ApplicationDto>(applicationToCreate);
         }
 
         public async Task<ApplicationDto> UpdateApplicationStateAsync(Guid applicationId, ApplicationUpdateStateRequestDto applicationUpdateStateRequestDto, CancellationToken cancellationToken, Guid? reviewedByUserId = null)

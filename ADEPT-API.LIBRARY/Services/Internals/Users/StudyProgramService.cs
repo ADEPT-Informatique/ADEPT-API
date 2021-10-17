@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
+using ADEPT_API.DATACONTRACTS.Dto.Users.Operations.Queries;
 
 namespace ADEPT_API.LIBRARY.Services.Internals
 {
@@ -51,7 +52,9 @@ namespace ADEPT_API.LIBRARY.Services.Internals
             cancellationToken.ThrowIfCancellationRequested();
 
             _ = _studyProgramRepository.GetStudyProgramByIdAsync(programId, cancellationToken) ?? throw new NotFoundException(nameof(StudyProgram).ToUpper(), $"Un Programme d'études avec le Id {programId}");
-            return (await _userRepository.GetAllAsync(x => x.Program.Id == programId)).ToList().Count;
+            var userQuery = new UsersQueryDto { ProgramIds = new List<Guid> { programId } };
+            var users = await _userRepository.GetUsersByQueryAsync(userQuery, cancellationToken);
+            return users.Count();
         }
     }
 }
