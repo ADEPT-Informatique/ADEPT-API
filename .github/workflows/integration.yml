@@ -28,3 +28,11 @@ jobs:
         run: dotnet restore
       - name: Build
         run: dotnet build --configuration Release --no-restore
+      - name: Publish
+        run: dotnet publish --configuration Release --no-restore
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: AdeptApi
+          path: /home/runner/work/ADEPT-API/ADEPT-API/ADEPT-API/bin/Release/net5.0/publish/
+
