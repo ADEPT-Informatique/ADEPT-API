@@ -3,6 +3,7 @@ using ADEPT_API.LIBRARY.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 
@@ -17,30 +18,28 @@ namespace ADEPT_API.Controllers
         {
             _studyProgramService = studyProgramService;
         }
+
         [HttpGet]
-        //[Authorize]
         [ProducesResponseType(typeof(IEnumerable<StudyProgramDto>), 200)]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetPrograms(CancellationToken cancellationToken)
         {
-            var response = _studyProgramService.GetAllAsync();
+            var response = await _studyProgramService.GetAllAsync(cancellationToken);
             return Ok(response);
         }
 
         [HttpPost]
-        //[Authorize]
         [ProducesResponseType(typeof(StudyProgramDto), 200)]
-        public async Task<IActionResult> Post([FromBody] StudyProgramCreateRequestDto body)
+        public async Task<IActionResult> CreateProgram([FromBody] StudyProgramCreateRequestDto studyProgramCreateRequestDto, CancellationToken cancellationToken)
         {
-            var response = _studyProgramService.CreateAsync(body);
+            var response = await _studyProgramService.CreateAsync(studyProgramCreateRequestDto, cancellationToken);
             return Ok(response);
         }
 
-        //[Authorize]
-        [HttpGet("{pId}/deletionimpact")]
+        [HttpGet("{id}/deletionimpact")]
         [ProducesResponseType(typeof(int), 200)]
-        public async Task<IActionResult> GetDeletionImpact([FromRoute] Guid pId)
+        public async Task<IActionResult> GetProgramDeletionImpact([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            var response = _studyProgramService.DeletionImpactAsync(pId);
+            var response = await _studyProgramService.DeletionImpactAsync(id, cancellationToken);
             return Ok(response);
         }
     }

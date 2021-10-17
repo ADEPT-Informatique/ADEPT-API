@@ -6,6 +6,8 @@ using System;
 using System.Threading.Tasks;
 using ADEPT_API.DATACONTRACTS.Dto.Users;
 using System.Threading;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ADEPT_API.DATABASE.Repositories.Internals
 {
@@ -32,6 +34,20 @@ namespace ADEPT_API.DATABASE.Repositories.Internals
 
             var studyProgram = await base.GetFirstOrDefaultAsync(x =>x.Name.ToLower().Trim() == name.ToLower().Trim());
             return _mapper.Map<StudyProgram, StudyProgramDto>(studyProgram);
+        }
+
+        public async Task<IEnumerable<StudyProgramDto>> GetProgramsAsync(CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            var results = new List<StudyProgramDto>();
+
+            var studyPrograms = await base.GetAllAsync();
+            if (studyPrograms is { } && studyPrograms.Any())
+            {
+                results.AddRange(studyPrograms.Select(x => _mapper.Map<StudyProgram, StudyProgramDto>(x)));
+            }
+
+            return results;
         }
 
         public async Task<StudyProgramDto> CreateStudyProgramAsync(StudyProgramCreateRequestDto studyProgramCreateRequestDto, CancellationToken cancellationToken)
