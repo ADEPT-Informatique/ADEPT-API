@@ -31,8 +31,8 @@ jobs:
         # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         args: >
-        -Dsonar.organization=${{ secrets.ORGANISATION }}
-        -Dsonar.projectKey=${{ secrets.PROJECT_KEY }}
+        -Dsonar.organization= ${{ secrets.ORGANISATION }}
+        -Dsonar.projectKey= ${{ secrets.SONAR_TOKEN }}
       - name: Publish
         run: dotnet publish --configuration Release --no-restore
       - name: Upload Artifact
