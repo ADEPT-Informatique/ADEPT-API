@@ -17,7 +17,7 @@ namespace ADEPT_API.DATABASE.Repositories.Internals
 
         public StudyProgramRepository(AdeptContext context, IMapper mapper) : base(context)
         {
-            _mapper = mapper ?? throw new ArgumentNullException($"{nameof(StudyProgramRepository)} was expection a value for {nameof(mapper)} but received null..");
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), $"{nameof(StudyProgramRepository)} was expection a value for {nameof(mapper)} but received null..");
         }
 
         public async Task<StudyProgramDto> GetStudyProgramByIdAsync(Guid id, CancellationToken cancellationToken)

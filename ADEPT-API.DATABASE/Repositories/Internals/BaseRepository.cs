@@ -22,7 +22,7 @@ namespace ADEPT_API.Repositories.Internals
 
         protected BaseRepository(AdeptContext context)
         {
-            _context = context ?? throw new ArgumentNullException($"{nameof(BaseRepository<TEntity>)} was expection a value for {nameof(context)} but received null..");
+            _context = context ?? throw new ArgumentNullException(nameof(context), $"{nameof(BaseRepository<TEntity>)} was expection a value for {nameof(context)} but received null..");
             this.dbSet = _context.Set<TEntity>();
         }
 

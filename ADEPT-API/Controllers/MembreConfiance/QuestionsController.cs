@@ -20,7 +20,7 @@ namespace ADEPT_API.Controllers.MembreConfiance
 
         public QuestionsController(IQuestionService questionService)
         {
-            _questionsService = questionService ?? throw new ArgumentNullException($"{nameof(QuestionsController)} was expection a value for {nameof(questionService)} but received null..");
+            _questionsService = questionService ?? throw new ArgumentNullException(nameof(questionService), $"{nameof(QuestionsController)} was expection a value for {nameof(questionService)} but received null..");
         }
 
         [HttpPost("query")]

@@ -23,7 +23,7 @@ namespace ADEPT_API.Repositories.Internals.MembreConfiance
 
         public QuestionRepository(AdeptContext context, IMapper mapper) : base(context)
         {
-            _mapper = mapper ?? throw new ArgumentNullException($"{nameof(QuestionRepository)} was expection a value for {nameof(mapper)} but received null..");
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), $"{nameof(QuestionRepository)} was expection a value for {nameof(mapper)} but received null..");
         }
 
         public async Task<QuestionDto> GetQuestionByIdAsync(Guid id, CancellationToken cancellationToken)

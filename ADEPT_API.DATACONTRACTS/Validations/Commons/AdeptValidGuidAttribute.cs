@@ -16,7 +16,7 @@ namespace ADEPT_API.DATACONTRACTS.Validations.Commons
 
             if (value is { })
             {
-                if (typeof(Guid) != value.GetType())
+                if (value.GetType() != typeof(Guid))
                 {
                     var stringValue = value as string;
                     if (!Guid.TryParse(stringValue, out var guid))

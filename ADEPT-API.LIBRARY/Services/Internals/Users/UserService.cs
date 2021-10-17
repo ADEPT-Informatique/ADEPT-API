@@ -16,7 +16,7 @@ namespace ADEPT_API.Services.Internals
 
         public UserService(IUserRepository userRepository)
         {
-            _userRepository = userRepository ?? throw new ArgumentNullException($"{nameof(UserService)} was expection a value for {nameof(userRepository)} but received null..");
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository), $"{nameof(UserService)} was expection a value for {nameof(userRepository)} but received null..");
         }
 
         public async Task<UserDto> CreateFirebaseUserAsync(string firebaseId, AuthenticateInDto authenticateInDto, CancellationToken cancellationToken)

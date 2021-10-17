@@ -16,11 +16,9 @@ namespace ADEPT_API.Controllers
     [Authorize]
     public class AuthController : ApiController
     {
-        private readonly IAuthService _authService;
         private readonly IUserService _userService;
         public AuthController(IAuthService authService, IUserService userService)
         {
-            _authService = authService ?? throw new ArgumentNullException($"{nameof(AuthController)} was expecting a value for {nameof(authService)} but received null..");
             _userService = userService ?? throw new ArgumentNullException($"{nameof(AuthController)} was expecting a value for {nameof(userService)} but received null..");
         }
 

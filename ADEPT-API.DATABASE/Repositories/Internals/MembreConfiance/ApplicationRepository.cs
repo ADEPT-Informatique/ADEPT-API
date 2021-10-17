@@ -28,7 +28,7 @@ namespace ADEPT_API.DATABASE.Repositories.Internals.MembreConfiance
 
         public ApplicationRepository(AdeptContext context, IMapper mapper) : base(context)
         {
-            _mapper = mapper ?? throw new ArgumentNullException($"{nameof(ApplicationRepository)} was expection a value for {nameof(mapper)} but received null..");
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), $"{nameof(ApplicationRepository)} was expection a value for {nameof(mapper)} but received null..");
         }
 
         public async Task<ApplicationDto> GetApplicationByIdAsync(Guid id, CancellationToken cancellationToken)

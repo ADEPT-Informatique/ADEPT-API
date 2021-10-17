@@ -23,7 +23,7 @@ namespace ADEPT_API.Repositories.Internals
 
         public UserRepository(AdeptContext context, IMapper mapper) : base(context) 
         {
-            _mapper = mapper ?? throw new ArgumentNullException($"{nameof(UserRepository)} was expection a value for {nameof(mapper)} but received null..");
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), $"{nameof(UserRepository)} was expection a value for {nameof(mapper)} but received null..");
         }
 
         public async Task<IEnumerable<UserDto>> GetUsersByQueryAsync(UsersQueryDto usersQueryDto, CancellationToken cancellationToken, string orderField = null, OrderDirections orderDirection = OrderDirections.Asc,  string searches = null)

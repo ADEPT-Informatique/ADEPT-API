@@ -22,7 +22,7 @@ namespace ADEPT_API.LIBRARY.Services.Internals.MembreConfiance
 
         public ApplicationService(IApplicationRepository applicationRepository)
         {
-            _applicationRepository = applicationRepository ?? throw new ArgumentNullException($"{nameof(ApplicationService)} was expection a value for {nameof(applicationRepository)} but received null..");
+            _applicationRepository = applicationRepository ?? throw new ArgumentNullException(nameof(applicationRepository), $"{nameof(ApplicationService)} was expection a value for {nameof(applicationRepository)} but received null..");
         }
 
         public async Task<IEnumerable<ApplicationDto>> GetApplicationsByQueryAsync(ApplicationsQueryDto applicationsQueryDto, CancellationToken cancellationToken)

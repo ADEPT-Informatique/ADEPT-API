@@ -18,7 +18,7 @@ namespace ADEPT_API.LIBRARY.Services.Internals.MembreConfiance
 
         public QuestionService(IQuestionRepository questionRepository)
         {
-            _questionRepository = questionRepository ?? throw new ArgumentNullException($"{nameof(QuestionService)} was expection a value for {nameof(questionRepository)} but received null..");
+            _questionRepository = questionRepository ?? throw new ArgumentNullException(nameof(questionRepository), $"{nameof(QuestionService)} was expection a value for {nameof(questionRepository)} but received null..");
         }
 
 
