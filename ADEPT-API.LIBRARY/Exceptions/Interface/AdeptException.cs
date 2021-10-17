@@ -9,7 +9,12 @@ namespace ADEPT_API.LIBRARY.Exceptions.Interface
         {
             _ = string.IsNullOrWhiteSpace(errorCode) ? throw new ArgumentNullException(nameof(errorCode)) : string.Empty;
 
-            this.ErrorCode = !string.IsNullOrWhiteSpace(errorCode) ? errorCode : throw new ArgumentNullException(nameof(errorCode), $"{nameof(AdeptException)} was expecting a value for {nameof(errorCode)} but null or empty was provided");
+            if (string.IsNullOrWhiteSpace(errorCode))
+            {
+                throw new ArgumentNullException(nameof(errorCode), $"{nameof(AdeptException)} was expecting a value for {nameof(errorCode)} but null or empty was provided");
+            }
+
+            this.ErrorCode = errorCode;
             this.HttpStatus = httpStatus;
         }
 
