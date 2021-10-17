@@ -12,63 +12,63 @@ namespace ADEPT_API.DATABASE.Repositories
     public interface IQuestionRepository
     {
         /// <summary>
-        /// 
+        /// Obtain a specific question
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="id">The question id</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns></returns>
         Task<QuestionDto> GetQuestionByIdAsync(Guid id, CancellationToken cancellationToken);
 
         /// <summary>
-        /// 
+        /// Create a question
         /// </summary>
-        /// <param name="questionCreateRequestDto"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="questionCreateRequestDto">The create request</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns></returns>
         Task<QuestionDto> CreateQuestionAsync(QuestionCreateRequestDto questionCreateRequestDto, CancellationToken cancellationToken);
 
         /// <summary>
-        /// 
+        /// Delete a specific question
         /// </summary>
-        /// <param name="pId"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="id">The question id</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns></returns>
-        Task DeleteQuestionAsync(Guid pId, CancellationToken cancellationToken);
+        Task DeleteQuestionAsync(Guid id, CancellationToken cancellationToken);
 
         /// <summary>
-        /// 
+        /// Obtain paginated questions depending on the query request
         /// </summary>
-        /// <param name="pageIndex"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="questionsQueryDto"></param>
-        /// <param name="cancellationToken"></param>
-        /// <param name="searches"></param>
+        /// <param name="pageIndex">The page index</param>
+        /// <param name="pageSize">The page size</param>
+        /// <param name="questionsQueryDto">The query request</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
+        /// <param name="searches">Searches</param>
         /// <returns></returns>
         Task<PaginatedCollectionResultDto<QuestionDto>> GetQuestionByPageByQueryAsync(int pageIndex, int pageSize, QuestionsQueryDto questionsQueryDto, CancellationToken cancellationToken, string searches = null);
 
         /// <summary>
-        /// 
+        /// Obtain questions depending on the query request
         /// </summary>
-        /// <param name="questionsQueryDto"></param>
-        /// <param name="cancellationToken"></param>
-        /// <param name="searches"></param>
+        /// <param name="questionsQueryDto">The query request</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
+        /// <param name="searches">Searches</param>
         /// <returns></returns>
         Task<IEnumerable<QuestionDto>> GetQuestionsByQueryAsync(QuestionsQueryDto questionsQueryDto, CancellationToken cancellationToken, string searches = null);
 
         /// <summary>
-        /// 
+        /// Toggle the activity
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="id">The question id</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns></returns>
         Task<QuestionDto> ToggleQuestionAsync(Guid id, CancellationToken cancellationToken);
 
         /// <summary>
-        /// 
+        /// Update a specific question
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="questionUpdateRequestDto"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="id">The question id</param>
+        /// <param name="questionUpdateRequestDto">The update request</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns></returns>
         Task<QuestionDto> UpdateQuestionAsync(Guid id, QuestionUpdateRequestDto questionUpdateRequestDto, CancellationToken cancellationToken);
     }

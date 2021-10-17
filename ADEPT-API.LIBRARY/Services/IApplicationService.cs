@@ -12,58 +12,58 @@ namespace ADEPT_API.LIBRARY.Services
     public interface IApplicationService
     {
         /// <summary>
-        /// 
+        /// Create a application for membre de confiance for a specific user
         /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="applicationCreateRequestDto"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="userId">The user id</param>
+        /// <param name="applicationCreateRequestDto">The application create request</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns></returns>
         Task<ApplicationDto> CreateApplicationAsync(Guid userId, ApplicationCreateRequestDto applicationCreateRequestDto, CancellationToken cancellationToken);
 
         /// <summary>
-        /// 
+        /// Obtain paginated applications depending on the query request
         /// </summary>
-        /// <param name="pageIndex"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="pApplicationsQueryDto"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="pageIndex">The page index</param>
+        /// <param name="pageSize">The page size</param>
+        /// <param name="applicationsQueryDto">The query request</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns></returns>
-        Task<PaginatedCollectionResultDto<ApplicationDto>> GetApplicationsByPageByQueryAsync(int pageIndex, int pageSize, ApplicationsQueryDto pApplicationsQueryDto, CancellationToken cancellationToken);
+        Task<PaginatedCollectionResultDto<ApplicationDto>> GetApplicationsByPageByQueryAsync(int pageIndex, int pageSize, ApplicationsQueryDto applicationsQueryDto, CancellationToken cancellationToken);
 
         /// <summary>
-        /// 
+        /// Obtain applications depending on the query request
         /// </summary>
-        /// <param name="pApplicationsQueryDto"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="applicationsQueryDto">The query request</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns></returns>
-        Task<IEnumerable<ApplicationDto>> GetApplicationsByQueryAsync(ApplicationsQueryDto pApplicationsQueryDto, CancellationToken cancellationToken);
+        Task<IEnumerable<ApplicationDto>> GetApplicationsByQueryAsync(ApplicationsQueryDto applicationsQueryDto, CancellationToken cancellationToken);
 
         /// <summary>
-        /// 
+        /// Update a specific application of a specific user
         /// </summary>
-        /// <param name="applicationId"></param>
-        /// <param name="userId"></param>
-        /// <param name="applicationUpdateRequestDto"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="applicationId">The application id</param>
+        /// <param name="userId">The user id</param>
+        /// <param name="applicationUpdateRequestDto">The update request</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns></returns>
         Task<ApplicationDto> UpdateApplicationAsync(Guid applicationId, Guid userId, ApplicationUpdateRequestDto applicationUpdateRequestDto, CancellationToken cancellationToken);
 
         /// <summary>
-        /// 
+        /// Update the state of a specific application
         /// </summary>
-        /// <param name="applicationId"></param>
-        /// <param name="reviewedByUserId"></param>
-        /// <param name="applicationUpdateStateRequestDto"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="applicationId">The application id</param>
+        /// <param name="reviewedByUserId">The reviewer user id</param>
+        /// <param name="applicationUpdateStateRequestDto">The state update request</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns></returns>
         Task<ApplicationDto> UpdateApplicationStateAsync(Guid applicationId, Guid reviewedByUserId, ApplicationUpdateStateRequestDto applicationUpdateStateRequestDto, CancellationToken cancellationToken);
 
         /// <summary>
-        /// 
+        /// Cancel a specifc application of a specific user
         /// </summary>
-        /// <param name="applicationId"></param>
-        /// <param name="userId"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="applicationId">The application id</param>
+        /// <param name="userId">The user id</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns></returns>
         Task<ApplicationDto> CancelApplicationAsync(Guid applicationId, Guid userId, CancellationToken cancellationToken);
     }

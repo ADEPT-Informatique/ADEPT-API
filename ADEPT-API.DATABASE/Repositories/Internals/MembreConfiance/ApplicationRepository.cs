@@ -26,25 +26,25 @@ namespace ADEPT_API.DATABASE.Repositories.Internals.MembreConfiance
     {
         private readonly IMapper _mapper;
 
-        public ApplicationRepository(AdeptContext pContext, IMapper pMapper) : base(pContext)
+        public ApplicationRepository(AdeptContext context, IMapper mapper) : base(context)
         {
-            _mapper = pMapper ?? throw new ArgumentNullException($"{nameof(ApplicationRepository)} was expection a value for {nameof(pMapper)} but received null..");
+            _mapper = mapper ?? throw new ArgumentNullException($"{nameof(ApplicationRepository)} was expection a value for {nameof(mapper)} but received null..");
         }
 
-        public async Task<ApplicationDto> GetApplicationByIdAsync(Guid pId, CancellationToken cancellationToken)
+        public async Task<ApplicationDto> GetApplicationByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var application = await base.GetFirstOrDefaultAsync(x => x.Id == pId);
+            var application = await base.GetFirstOrDefaultAsync(x => x.Id == id);
             return _mapper.Map<Application, ApplicationDto>(application);
         }
 
-        public async Task<IEnumerable<ApplicationDto>> GetApplicationsByQuery(ApplicationsQueryDto pApplicationsQueryDto, CancellationToken cancellationToken)
+        public async Task<IEnumerable<ApplicationDto>> GetApplicationsByQueryAsync(ApplicationsQueryDto applicationsQueryDto, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             var results = new List<ApplicationDto>();
 
-            var expression = this.GetApplicationSearchQuery(pApplicationsQueryDto);
+            var expression = this.GetApplicationSearchQuery(applicationsQueryDto);
             var applications = await base.GetAllAsync(expression, includeResolver: this.IncludeAll);
             if (applications is { } && applications.Any())
             {
@@ -54,12 +54,12 @@ namespace ADEPT_API.DATABASE.Repositories.Internals.MembreConfiance
             return results;
         }
 
-        public async Task<PaginatedCollectionResultDto<ApplicationDto>> GetApplicationsByPageByQuery(int pageIndex, int pageSize, ApplicationsQueryDto pApplicationsQueryDto, CancellationToken cancellationToken)
+        public async Task<PaginatedCollectionResultDto<ApplicationDto>> GetApplicationsByPageByQueryAsync(int pageIndex, int pageSize, ApplicationsQueryDto applicationsQueryDto, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
             var results = new PaginatedCollectionResultDto<ApplicationDto>();
 
-            var expression = this.GetApplicationSearchQuery(pApplicationsQueryDto);
+            var expression = this.GetApplicationSearchQuery(applicationsQueryDto);
             var paginatedResults = await base.GetPaginatedResultsAsync(pageIndex, pageSize, expression, includeResolver: this.IncludeAll);
             if (paginatedResults is { } && paginatedResults.Any())
             {
@@ -114,7 +114,7 @@ namespace ADEPT_API.DATABASE.Repositories.Internals.MembreConfiance
 
         #region Helpers
 
-        public IQueryable<Application> IncludeAll(IQueryable<Application> queryable)
+        private IQueryable<Application> IncludeAll(IQueryable<Application> queryable)
         {
             var query = queryable.Include(x => x.ApplicationQuestions)
                                  .Include(x => x.User).ThenInclude(x => x.Roles)
@@ -123,10 +123,10 @@ namespace ADEPT_API.DATABASE.Repositories.Internals.MembreConfiance
             return query;
         }
 
-        private Expression<Func<Application, bool>> GetApplicationSearchQuery(ApplicationsQueryDto pApplicationsQueryDto)
+        private Expression<Func<Application, bool>> GetApplicationSearchQuery(ApplicationsQueryDto applicationsQueryDto)
         {
             var queryBuilder = new ApplicationQueryBuilder(null);
-            var query = queryBuilder.GetQuery(pApplicationsQueryDto ??= new ApplicationsQueryDto());
+            var query = queryBuilder.GetQuery(applicationsQueryDto ??= new ApplicationsQueryDto());
             return query;
         }
 

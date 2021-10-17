@@ -25,19 +25,19 @@ namespace ADEPT_API.LIBRARY.Services.Internals.MembreConfiance
             _applicationRepository = applicationRepository ?? throw new ArgumentNullException($"{nameof(ApplicationService)} was expection a value for {nameof(applicationRepository)} but received null..");
         }
 
-        public async Task<IEnumerable<ApplicationDto>> GetApplicationsByQueryAsync(ApplicationsQueryDto pApplicationsQueryDto, CancellationToken cancellationToken)
+        public async Task<IEnumerable<ApplicationDto>> GetApplicationsByQueryAsync(ApplicationsQueryDto applicationsQueryDto, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var results = await _applicationRepository.GetApplicationsByQuery(pApplicationsQueryDto, cancellationToken);
+            var results = await _applicationRepository.GetApplicationsByQueryAsync(applicationsQueryDto, cancellationToken);
             return results;
         }
 
-        public async Task<PaginatedCollectionResultDto<ApplicationDto>> GetApplicationsByPageByQueryAsync(int pageIndex, int pageSize, ApplicationsQueryDto pApplicationsQueryDto, CancellationToken cancellationToken)
+        public async Task<PaginatedCollectionResultDto<ApplicationDto>> GetApplicationsByPageByQueryAsync(int pageIndex, int pageSize, ApplicationsQueryDto applicationsQueryDto, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var results = await _applicationRepository.GetApplicationsByPageByQuery(pageIndex, pageSize, pApplicationsQueryDto, cancellationToken);
+            var results = await _applicationRepository.GetApplicationsByPageByQueryAsync(pageIndex, pageSize, applicationsQueryDto, cancellationToken);
             return results;
         }
 
@@ -46,7 +46,7 @@ namespace ADEPT_API.LIBRARY.Services.Internals.MembreConfiance
             cancellationToken.ThrowIfCancellationRequested();
 
             var applicationQuery = new ApplicationsQueryDto { UserIds = new List<Guid> { userId }, CreatedTimestampUtcQuery = EpochUtility.ObtainTimestampQueryForApplicationCreation() };
-            var applications = await _applicationRepository.GetApplicationsByQuery(applicationQuery, cancellationToken);
+            var applications = await _applicationRepository.GetApplicationsByQueryAsync(applicationQuery, cancellationToken);
             if (applications is { } && applications.Any())
             {
                 throw new AlreadyAppliedException(nameof(Application).ToUpper(), $"Vous avez déjà appliquer durant cette session veuillez essayé la session prochaine.");

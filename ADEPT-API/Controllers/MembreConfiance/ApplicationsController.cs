@@ -25,17 +25,17 @@ namespace ADEPT_API.Controllers.MembreConfiance
 
         [HttpPost("query")]
         [ProducesResponseType(typeof(IEnumerable<ApplicationDto>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetApplicationsByQuery([FromBody] ApplicationsQueryDto pApplicationsQueryDto, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetApplicationsByQuery([FromBody] ApplicationsQueryDto applicationsQueryDto, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var respone = await _applicationService.GetApplicationsByQueryAsync(pApplicationsQueryDto, cancellationToken);
+            var respone = await _applicationService.GetApplicationsByQueryAsync(applicationsQueryDto, cancellationToken);
             return Ok(respone);
         }
 
         [HttpPost("pages/{pageIndex}/query")]
         [ProducesResponseType(typeof(PaginatedCollectionResultDto<ApplicationDto>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetApplicationByPageByQuery([FromRoute] int pageIndex, [FromQuery] int pageSize, [FromRoute] ApplicationsQueryDto pApplicationsQueryDto, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetApplicationByPageByQuery([FromRoute] int pageIndex, [FromQuery] int pageSize, [FromRoute] ApplicationsQueryDto applicationsQueryDto, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -44,7 +44,7 @@ namespace ADEPT_API.Controllers.MembreConfiance
                 return BadRequest($"Les paramètres pageIndex : {pageIndex} et pageSize : {pageSize} doivent être plus grand que 0");
             }
 
-            var response = await _applicationService.GetApplicationsByPageByQueryAsync(pageIndex, pageSize, pApplicationsQueryDto, cancellationToken);
+            var response = await _applicationService.GetApplicationsByPageByQueryAsync(pageIndex, pageSize, applicationsQueryDto, cancellationToken);
             return Ok(response);
         }
 
