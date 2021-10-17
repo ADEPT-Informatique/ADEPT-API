@@ -6,7 +6,7 @@ namespace ADEPT_API.DATABASE.Repositories.Internals
 {
     internal class StudyProgramRepository : BaseRepository<StudyProgram>, IStudyProgramRepository
     {
-        public StudyProgramRepository(AdeptContext pContext) : base(pContext)
+        public StudyProgramRepository(AdeptContext context) : base(context)
         {}
     }
 }

@@ -26,11 +26,11 @@ namespace ADEPT_API.Repositories.Internals.MembreConfiance
             _mapper = mapper ?? throw new ArgumentNullException($"{nameof(QuestionRepository)} was expection a value for {nameof(mapper)} but received null..");
         }
 
-        public async Task<QuestionDto> GetQuestionByIdAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<QuestionDto> GetQuestionByIdAsync(Guid pId, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var question = await base.GetFirstOrDefaultAsync(x => x.Id == id);
+            var question = await base.GetFirstOrDefaultAsync(x => x.Id == pId);
             return _mapper.Map<Question, QuestionDto>(question);
         }
 
@@ -65,11 +65,11 @@ namespace ADEPT_API.Repositories.Internals.MembreConfiance
             return results;
         }
 
-        public async Task<QuestionDto> ToggleQuestionAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<QuestionDto> ToggleQuestionAsync(Guid pId, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var question = await base.GetAsync(id);
+            var question = await base.GetAsync(pId);
             question.Activated = !question.Activated;
             await base.SaveAsync();
 
@@ -87,21 +87,21 @@ namespace ADEPT_API.Repositories.Internals.MembreConfiance
             return _mapper.Map<Question, QuestionDto>(questionToCreate);
         }
 
-        public async Task<QuestionDto> UpdateQuestionAsync(Guid id, QuestionUpdateRequestDto questionUpdateRequestDto, CancellationToken cancellationToken)
+        public async Task<QuestionDto> UpdateQuestionAsync(Guid pId, QuestionUpdateRequestDto questionUpdateRequestDto, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var question = await base.GetAsync(id);
+            var question = await base.GetAsync(pId);
             _mapper.Map<QuestionUpdateRequestDto, Question>(questionUpdateRequestDto, question);
             await base.SaveAsync();
 
             return _mapper.Map<Question, QuestionDto>(question);
         }
 
-        public async Task DeleteQuestionAsync(Guid id, CancellationToken cancellationToken)
+        public async Task DeleteQuestionAsync(Guid pId, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            var question = await base.GetAsync(id);
+            var question = await base.GetAsync(pId);
 
             base.Remove(question);
             await base.SaveAsync();

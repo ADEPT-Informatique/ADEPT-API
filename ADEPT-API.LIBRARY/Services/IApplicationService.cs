@@ -25,18 +25,18 @@ namespace ADEPT_API.LIBRARY.Services
         /// </summary>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
-        /// <param name="applicationsQueryDto"></param>
+        /// <param name="pApplicationsQueryDto"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<PaginatedCollectionResultDto<ApplicationDto>> GetApplicationsByPageByQueryAsync(int pageIndex, int pageSize, ApplicationsQueryDto applicationsQueryDto, CancellationToken cancellationToken);
+        Task<PaginatedCollectionResultDto<ApplicationDto>> GetApplicationsByPageByQueryAsync(int pageIndex, int pageSize, ApplicationsQueryDto pApplicationsQueryDto, CancellationToken cancellationToken);
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="applicationsQueryDto"></param>
+        /// <param name="pApplicationsQueryDto"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<IEnumerable<ApplicationDto>> GetApplicationsByQueryAsync(ApplicationsQueryDto applicationsQueryDto, CancellationToken cancellationToken);
+        Task<IEnumerable<ApplicationDto>> GetApplicationsByQueryAsync(ApplicationsQueryDto pApplicationsQueryDto, CancellationToken cancellationToken);
 
         /// <summary>
         /// 

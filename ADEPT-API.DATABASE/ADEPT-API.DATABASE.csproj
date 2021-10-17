@@ -23,7 +23,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
-    <PackageReference Include="Sakura.AspNetCore.PagedList" Version="2.0.2" />
     <PackageReference Include="Sakura.AspNetCore.PagedList.Async" Version="1.1.1" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.13" />
   </ItemGroup>

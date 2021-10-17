@@ -4,6 +4,6 @@ namespace ADEPT_API.LIBRARY.Services
 {
     public interface IUserService
     {
-        User CreateUser(string pFirebaseId, string pUsername, string pEmail);
+        User CreateUser(string firebaseId, string username, string email);
     }
 }

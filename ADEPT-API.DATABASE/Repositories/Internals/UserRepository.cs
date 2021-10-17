@@ -7,6 +7,6 @@ namespace ADEPT_API.Repositories.Internals
     internal class UserRepository : BaseRepository<User>, IUserRepository
     {
 
-        public UserRepository(AdeptContext pContext) : base(pContext) { }
+        public UserRepository(AdeptContext context) : base(context) { }
     }
 }

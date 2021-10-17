@@ -12,20 +12,20 @@ namespace ADEPT_API.Services.Internals
         private readonly IUserRepository _userRepository;
 
 
-        public UserService(IUserRepository pUserRepository)
+        public UserService(IUserRepository userRepository)
         {
-            _userRepository = pUserRepository ?? throw new ArgumentNullException($"{nameof(UserService)} was expection a value for {nameof(pUserRepository)} but received null..");
+            _userRepository = userRepository ?? throw new ArgumentNullException($"{nameof(UserService)} was expection a value for {nameof(userRepository)} but received null..");
         }
 
         public object UserRoles { get; private set; }
 
-        public User CreateUser(string pFirebaseId, string pUsername, string pEmail)
+        public User CreateUser(string firebaseId, string username, string email)
         {
             User user = new User()
             {
-                FireBaseID = pFirebaseId,
-                Username = pUsername,
-                Email = pEmail
+                FireBaseID = firebaseId,
+                Username = username,
+                Email = email
             };
 
             user.Roles.Add(new UserRole

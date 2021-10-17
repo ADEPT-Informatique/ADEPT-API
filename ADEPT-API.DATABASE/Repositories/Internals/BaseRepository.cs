@@ -20,9 +20,9 @@ namespace ADEPT_API.Repositories.Internals
 
         protected virtual AdeptContext Context { get { return _context; } }
 
-        protected BaseRepository(AdeptContext pContext)
+        protected BaseRepository(AdeptContext context)
         {
-            _context = pContext ?? throw new ArgumentNullException($"{nameof(BaseRepository<TEntity>)} was expection a value for {nameof(pContext)} but received null..");
+            _context = context ?? throw new ArgumentNullException($"{nameof(BaseRepository<TEntity>)} was expection a value for {nameof(context)} but received null..");
             this.dbSet = _context.Set<TEntity>();
         }
 

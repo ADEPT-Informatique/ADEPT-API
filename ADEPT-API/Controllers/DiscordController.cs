@@ -20,7 +20,7 @@ namespace ADEPT_API.Controllers
             throw new NotImplementedException();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{pId}")]
         public async Task<IActionResult> GetMutedUserById()
         {
             throw new NotImplementedException();
@@ -33,9 +33,9 @@ namespace ADEPT_API.Controllers
         }
 
 
-        [HttpPost("{id}")]
+        [HttpPost("{pId}")]
 
-        public async Task<IActionResult> UnmuteUser([FromRoute] Guid id, [FromQuery] string reason)
+        public async Task<IActionResult> UnmuteUser([FromRoute] Guid pId, [FromQuery] string reason)
         {
             throw new NotImplementedException();
         }

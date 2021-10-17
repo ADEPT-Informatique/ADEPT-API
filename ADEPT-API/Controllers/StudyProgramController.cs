@@ -13,9 +13,9 @@ namespace ADEPT_API.Controllers
     public class StudyProgramController : ControllerBase
     {
         private readonly IStudyProgramService _studyProgramService;
-        public StudyProgramController(IStudyProgramService pStudyProgramService)
+        public StudyProgramController(IStudyProgramService studyProgramService)
         {
-            _studyProgramService = pStudyProgramService;
+            _studyProgramService = studyProgramService;
         }
         [HttpGet]
         //[Authorize]
@@ -36,11 +36,11 @@ namespace ADEPT_API.Controllers
         }
 
         //[Authorize]
-        [HttpGet("{id}/deletionimpact")]
+        [HttpGet("{pId}/deletionimpact")]
         [ProducesResponseType(typeof(int), 200)]
-        public async Task<IActionResult> GetDeletionImpact([FromRoute] Guid id)
+        public async Task<IActionResult> GetDeletionImpact([FromRoute] Guid pId)
         {
-            var response = _studyProgramService.DeletionImpactAsync(id);
+            var response = _studyProgramService.DeletionImpactAsync(pId);
             return Ok(response);
         }
     }

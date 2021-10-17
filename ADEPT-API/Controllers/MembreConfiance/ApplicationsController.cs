@@ -25,17 +25,17 @@ namespace ADEPT_API.Controllers.MembreConfiance
 
         [HttpPost("query")]
         [ProducesResponseType(typeof(IEnumerable<ApplicationDto>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetApplicationsByQuery([FromBody] ApplicationsQueryDto applicationsQueryDto, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetApplicationsByQuery([FromBody] ApplicationsQueryDto pApplicationsQueryDto, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var respone = await _applicationService.GetApplicationsByQueryAsync(applicationsQueryDto, cancellationToken);
+            var respone = await _applicationService.GetApplicationsByQueryAsync(pApplicationsQueryDto, cancellationToken);
             return Ok(respone);
         }
 
         [HttpPost("pages/{pageIndex}/query")]
         [ProducesResponseType(typeof(PaginatedCollectionResultDto<ApplicationDto>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetApplicationByPageByQuery([FromRoute] int pageIndex, [FromQuery] int pageSize, [FromRoute] ApplicationsQueryDto applicationsQueryDto, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetApplicationByPageByQuery([FromRoute] int pageIndex, [FromQuery] int pageSize, [FromRoute] ApplicationsQueryDto pApplicationsQueryDto, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -44,7 +44,7 @@ namespace ADEPT_API.Controllers.MembreConfiance
                 return BadRequest($"Les paramètres pageIndex : {pageIndex} et pageSize : {pageSize} doivent être plus grand que 0");
             }
 
-            var response = await _applicationService.GetApplicationsByPageByQueryAsync(pageIndex, pageSize, applicationsQueryDto, cancellationToken);
+            var response = await _applicationService.GetApplicationsByPageByQueryAsync(pageIndex, pageSize, pApplicationsQueryDto, cancellationToken);
             return Ok(response);
         }
 
@@ -58,33 +58,33 @@ namespace ADEPT_API.Controllers.MembreConfiance
             return Ok(response);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{pId}")]
         [ProducesResponseType(typeof(ApplicationDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdateApplication([FromRoute] Guid id, [FromBody] ApplicationUpdateRequestDto applicationUpdateRequestDto, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateApplication([FromRoute] Guid pId, [FromBody] ApplicationUpdateRequestDto applicationUpdateRequestDto, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var response = await _applicationService.UpdateApplicationAsync(id, base.AuthentificatedUserId, applicationUpdateRequestDto, cancellationToken);
+            var response = await _applicationService.UpdateApplicationAsync(pId, base.AuthentificatedUserId, applicationUpdateRequestDto, cancellationToken);
             return Ok(response);
         }
 
-        [HttpPut("{id}/cancel")]
+        [HttpPut("{pId}/cancel")]
         [ProducesResponseType(typeof(ApplicationDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> CancelApplication([FromRoute] Guid id, CancellationToken cancellationToken)
+        public async Task<IActionResult> CancelApplication([FromRoute] Guid pId, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var response = await _applicationService.CancelApplicationAsync(id, base.AuthentificatedUserId, cancellationToken);
+            var response = await _applicationService.CancelApplicationAsync(pId, base.AuthentificatedUserId, cancellationToken);
             return Ok(response);
         }
 
-        [HttpPut("{id}/changestate")]
+        [HttpPut("{pId}/changestate")]
         [ProducesResponseType(typeof(ApplicationDto), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdateApplicationState([FromRoute] Guid id, [FromBody] ApplicationUpdateStateRequestDto applicationUpdateStateRequestDto, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateApplicationState([FromRoute] Guid pId, [FromBody] ApplicationUpdateStateRequestDto applicationUpdateStateRequestDto, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var response = await _applicationService.UpdateApplicationStateAsync(id, base.AuthentificatedUserId, applicationUpdateStateRequestDto, cancellationToken);
+            var response = await _applicationService.UpdateApplicationStateAsync(pId, base.AuthentificatedUserId, applicationUpdateStateRequestDto, cancellationToken);
             return Ok(response);
         }
     }

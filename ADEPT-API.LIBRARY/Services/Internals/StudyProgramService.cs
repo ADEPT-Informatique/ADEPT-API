@@ -17,21 +17,21 @@ namespace ADEPT_API.LIBRARY.Services.Internals
         private readonly IStudyProgramRepository _studyProgramRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        public StudyProgramService(IStudyProgramRepository pStudyProgramRepository, IUserRepository pUserRepository, IMapper pMapper)
+        public StudyProgramService(IStudyProgramRepository studyProgramRepository, IUserRepository userRepository, IMapper mapper)
         {
-            _mapper = pMapper;
-            _studyProgramRepository = pStudyProgramRepository ?? throw new ArgumentNullException($"{nameof(StudyProgramService)} was expecting a value for {nameof(pStudyProgramRepository)} but received null..");
-            _userRepository = pUserRepository ?? throw new ArgumentNullException($"{nameof(StudyProgramService)} was expecting a value for {nameof(pUserRepository)} but received null..");
+            _mapper = mapper;
+            _studyProgramRepository = studyProgramRepository ?? throw new ArgumentNullException($"{nameof(StudyProgramService)} was expecting a value for {nameof(studyProgramRepository)} but received null..");
+            _userRepository = userRepository ?? throw new ArgumentNullException($"{nameof(StudyProgramService)} was expecting a value for {nameof(userRepository)} but received null..");
         }
         public async Task<IEnumerable<StudyProgramDto>> GetAllAsync()
         {
             return _mapper.Map<IEnumerable<StudyProgramDto>>(await _studyProgramRepository.GetAllAsync());
         }
 
-        public async Task<StudyProgramDto> CreateAsync(StudyProgramCreateRequestDto pProgram)
+        public async Task<StudyProgramDto> CreateAsync(StudyProgramCreateRequestDto studyProgramCreateRequestDto)
         {
 
-            StudyProgram program = await _studyProgramRepository.GetFirstOrDefaultAsync(x => x.Name.ToLower().Trim() == pProgram.Name.ToLower().Trim());
+            StudyProgram program = await _studyProgramRepository.GetFirstOrDefaultAsync(x => x.Name.ToLower().Trim() == studyProgramCreateRequestDto.Name.ToLower().Trim());
             if (program != null)
             {
                 // TODO error 
@@ -41,7 +41,7 @@ namespace ADEPT_API.LIBRARY.Services.Internals
             {
                 program = new StudyProgram()
                 {
-                    Name = pProgram.Name
+                    Name = studyProgramCreateRequestDto.Name
                 };
                 await _studyProgramRepository.AddAsync(program);
                 await _studyProgramRepository.SaveAsync();
@@ -49,10 +49,10 @@ namespace ADEPT_API.LIBRARY.Services.Internals
             }
         }
 
-        public async Task<int> DeletionImpactAsync(Guid pProgramId)
+        public async Task<int> DeletionImpactAsync(Guid programId)
         {
-            _ = _studyProgramRepository.GetFirstOrDefaultAsync(x => x.Id == pProgramId) ?? throw new NotFoundException(nameof(StudyProgram).ToUpper(), $"Un Programme d'études avec le Id {pProgramId}");
-            return (await _userRepository.GetAllAsync(x => x.Program.Id == pProgramId)).ToList().Count;
+            _ = _studyProgramRepository.GetFirstOrDefaultAsync(x => x.Id == programId) ?? throw new NotFoundException(nameof(StudyProgram).ToUpper(), $"Un Programme d'études avec le Id {programId}");
+            return (await _userRepository.GetAllAsync(x => x.Program.Id == programId)).ToList().Count;
         }
     }
 }

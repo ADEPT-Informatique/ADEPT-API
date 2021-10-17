@@ -25,19 +25,19 @@ namespace ADEPT_API.LIBRARY.Services.Internals.MembreConfiance
             _applicationRepository = applicationRepository ?? throw new ArgumentNullException($"{nameof(ApplicationService)} was expection a value for {nameof(applicationRepository)} but received null..");
         }
 
-        public async Task<IEnumerable<ApplicationDto>> GetApplicationsByQueryAsync(ApplicationsQueryDto applicationsQueryDto, CancellationToken cancellationToken)
+        public async Task<IEnumerable<ApplicationDto>> GetApplicationsByQueryAsync(ApplicationsQueryDto pApplicationsQueryDto, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var results = await _applicationRepository.GetApplicationsByQuery(applicationsQueryDto, cancellationToken);
+            var results = await _applicationRepository.GetApplicationsByQuery(pApplicationsQueryDto, cancellationToken);
             return results;
         }
 
-        public async Task<PaginatedCollectionResultDto<ApplicationDto>> GetApplicationsByPageByQueryAsync(int pageIndex, int pageSize, ApplicationsQueryDto applicationsQueryDto, CancellationToken cancellationToken)
+        public async Task<PaginatedCollectionResultDto<ApplicationDto>> GetApplicationsByPageByQueryAsync(int pageIndex, int pageSize, ApplicationsQueryDto pApplicationsQueryDto, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var results = await _applicationRepository.GetApplicationsByPageByQuery(pageIndex, pageSize, applicationsQueryDto, cancellationToken);
+            var results = await _applicationRepository.GetApplicationsByPageByQuery(pageIndex, pageSize, pApplicationsQueryDto, cancellationToken);
             return results;
         }
 

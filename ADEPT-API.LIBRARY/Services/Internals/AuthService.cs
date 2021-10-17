@@ -6,9 +6,9 @@ namespace ADEPT_API.LIBRARY.Services.Internals
     internal class AuthService : IAuthService
     {
         private readonly IAuthRepository _authRepository;
-        public AuthService(IAuthRepository pAuthRepository)
+        public AuthService(IAuthRepository authRepository)
         {
-            _authRepository = pAuthRepository ?? throw new ArgumentNullException($"{nameof(AuthService)} was expection a value for {nameof(pAuthRepository)} but received null..");
+            _authRepository = authRepository ?? throw new ArgumentNullException($"{nameof(AuthService)} was expection a value for {nameof(authRepository)} but received null..");
         }
 
     }

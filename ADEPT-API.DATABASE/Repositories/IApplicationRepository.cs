@@ -35,18 +35,18 @@ namespace ADEPT_API.DATABASE.Repositoriese
         /// </summary>
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
-        /// <param name="applicationsQueryDto"></param>
+        /// <param name="pApplicationsQueryDto"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<PaginatedCollectionResultDto<ApplicationDto>> GetApplicationsByPageByQuery(int pageIndex, int pageSize, ApplicationsQueryDto applicationsQueryDto, CancellationToken cancellationToken);
+        Task<PaginatedCollectionResultDto<ApplicationDto>> GetApplicationsByPageByQuery(int pageIndex, int pageSize, ApplicationsQueryDto pApplicationsQueryDto, CancellationToken cancellationToken);
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="applicationsQueryDto"></param>
+        /// <param name="pApplicationsQueryDto"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<IEnumerable<ApplicationDto>> GetApplicationsByQuery(ApplicationsQueryDto applicationsQueryDto, CancellationToken cancellationToken);
+        Task<IEnumerable<ApplicationDto>> GetApplicationsByQuery(ApplicationsQueryDto pApplicationsQueryDto, CancellationToken cancellationToken);
 
         /// <summary>
         /// 

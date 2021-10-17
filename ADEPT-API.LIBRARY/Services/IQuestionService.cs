@@ -22,10 +22,10 @@ namespace ADEPT_API.LIBRARY.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="pId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task DeleteQuestionAsync(Guid id, CancellationToken cancellationToken);
+        Task DeleteQuestionAsync(Guid pId, CancellationToken cancellationToken);
 
         /// <summary>
         /// 

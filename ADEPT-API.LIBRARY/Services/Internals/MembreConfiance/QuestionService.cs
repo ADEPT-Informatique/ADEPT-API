@@ -38,12 +38,12 @@ namespace ADEPT_API.LIBRARY.Services.Internals.MembreConfiance
             return results;
         }
 
-        public async Task<QuestionDto> ToggleQuestionAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<QuestionDto> ToggleQuestionAsync(Guid pId, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            _ = await _questionRepository.GetQuestionByIdAsync(id, cancellationToken) ?? throw new NotFoundException(nameof(Question).ToUpper(), $"La question avec l'id {id} est introuvable.");
+            _ = await _questionRepository.GetQuestionByIdAsync(pId, cancellationToken) ?? throw new NotFoundException(nameof(Question).ToUpper(), $"La question avec l'pId {pId} est introuvable.");
 
-            var result = await _questionRepository.ToggleQuestionAsync(id, cancellationToken);
+            var result = await _questionRepository.ToggleQuestionAsync(pId, cancellationToken);
             return result;
         }
 
@@ -55,21 +55,21 @@ namespace ADEPT_API.LIBRARY.Services.Internals.MembreConfiance
             return result;
         }
 
-        public async Task<QuestionDto> UpdateQuestionAsync(Guid id, QuestionUpdateRequestDto questionUpdateRequestDto, CancellationToken cancellationToken)
+        public async Task<QuestionDto> UpdateQuestionAsync(Guid pId, QuestionUpdateRequestDto questionUpdateRequestDto, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            _ = await _questionRepository.GetQuestionByIdAsync(id, cancellationToken) ?? throw new NotFoundException(nameof(Question).ToUpper(), $"La question avec l'id {id} est introuvable.");
+            _ = await _questionRepository.GetQuestionByIdAsync(pId, cancellationToken) ?? throw new NotFoundException(nameof(Question).ToUpper(), $"La question avec l'pId {pId} est introuvable.");
 
-            var result = await _questionRepository.UpdateQuestionAsync(id, questionUpdateRequestDto, cancellationToken);
+            var result = await _questionRepository.UpdateQuestionAsync(pId, questionUpdateRequestDto, cancellationToken);
             return result;
         }
 
-        public async Task DeleteQuestionAsync(Guid id, CancellationToken cancellationToken)
+        public async Task DeleteQuestionAsync(Guid pId, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            _ = await _questionRepository.GetQuestionByIdAsync(id, cancellationToken) ?? throw new NotFoundException(nameof(Question).ToUpper(), $"La question avec l'id {id} est introuvable.");
+            _ = await _questionRepository.GetQuestionByIdAsync(pId, cancellationToken) ?? throw new NotFoundException(nameof(Question).ToUpper(), $"La question avec l'pId {pId} est introuvable.");
 
-            await _questionRepository.DeleteQuestionAsync(id, cancellationToken);
+            await _questionRepository.DeleteQuestionAsync(pId, cancellationToken);
         }
     }
 }

@@ -7,8 +7,8 @@ namespace ADEPT_API.LIBRARY.Services
 {
     public interface IStudyProgramService
     {
-        Task<StudyProgramDto> CreateAsync(StudyProgramCreateRequestDto pProgram);
-        Task<int> DeletionImpactAsync(Guid pProgramId);
+        Task<StudyProgramDto> CreateAsync(StudyProgramCreateRequestDto studyProgramCreateRequestDto);
+        Task<int> DeletionImpactAsync(Guid programId);
         Task<IEnumerable<StudyProgramDto>> GetAllAsync();
     }
 }
