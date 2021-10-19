@@ -17,8 +17,11 @@ namespace ADEPT_API.DATABASE.QueryBuilder
             if (queryDto is QuestionsQueryDto questionsQueryDto)
             {
                 //Query Ids
-                Expression<Func<Question, bool>> queryIds = entity => questionsQueryDto.Ids.Contains(entity.Id);
-                _query = questionsQueryDto.Ids is null || !questionsQueryDto.Ids.Any() ? _query : _query is null ? queryIds : _query.And(queryIds);
+                if (questionsQueryDto.Ids is { } && questionsQueryDto.Ids.Any())
+                {
+                    Expression<Func<Question, bool>> queryIds = entity => questionsQueryDto.Ids.Contains(entity.Id);
+                    _query = _query is null ? queryIds : _query.And(queryIds);
+                }
 
                 //Query IsActivated
                 if (questionsQueryDto.IsActivated.HasValue)

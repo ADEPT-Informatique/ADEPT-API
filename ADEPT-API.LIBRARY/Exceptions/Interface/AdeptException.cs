@@ -7,12 +7,7 @@ namespace ADEPT_API.LIBRARY.Exceptions.Interface
     {
         protected AdeptException(string errorCode, string message, HttpStatusCode? httpStatus) : base(message)
         {
-            _ = string.IsNullOrWhiteSpace(errorCode) ? throw new ArgumentNullException(nameof(errorCode)) : string.Empty;
-
-            if (string.IsNullOrWhiteSpace(errorCode))
-            {
-                throw new ArgumentNullException(nameof(errorCode), $"{nameof(AdeptException)} was expecting a value for {nameof(errorCode)} but null or empty was provided");
-            }
+            _ = string.IsNullOrWhiteSpace(errorCode) ? throw new ArgumentNullException(nameof(errorCode), $"{nameof(AdeptException)} was expecting a value for {nameof(errorCode)} but null or empty was provided") : string.Empty;
 
             this.ErrorCode = errorCode;
             this.HttpStatus = httpStatus;
