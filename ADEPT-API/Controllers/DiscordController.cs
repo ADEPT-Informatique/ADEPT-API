@@ -14,30 +14,31 @@ namespace ADEPT_API.Controllers
 
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetMutedUsers()
-        {
-            throw new NotImplementedException();
-        }
+        //TODO-OG Uncomment DiscordController when we will start the implementation => SonarCloud don't like that there's no Await in each method
+        //[HttpGet]
+        //public async Task<IActionResult> GetMutedUsers()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        [HttpGet("{pId}")]
-        public async Task<IActionResult> GetMutedUserById()
-        {
-            throw new NotImplementedException();
-        }
+        //[HttpGet("{pId}")]
+        //public async Task<IActionResult> GetMutedUserById()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        [HttpPost]
-        public async Task<IActionResult> CreateUserMute()
-        {
-            throw new NotImplementedException();
-        }
+        //[HttpPost]
+        //public async Task<IActionResult> CreateUserMute()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
 
-        [HttpPost("{pId}")]
+        //[HttpPost("{id}")]
 
-        public async Task<IActionResult> UnmuteUser([FromRoute] Guid pId, [FromQuery] string reason)
-        {
-            throw new NotImplementedException();
-        }
+        //public async Task<IActionResult> UnmuteUser([FromRoute] Guid id, [FromQuery] string reason)
+        //{            
+        //    throw new NotImplementedException();
+        //}
     }
 }
