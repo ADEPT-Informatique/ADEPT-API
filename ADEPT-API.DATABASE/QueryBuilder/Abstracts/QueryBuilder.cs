@@ -10,7 +10,7 @@ namespace ADEPT_API.DATABASE.QueryBuilder.Abstracts
 
         protected IEnumerable<string> _searches;
 
-        public QueryBuilder(string pSearches)
+        protected QueryBuilder(string pSearches)
         {
             _query = default(Expression<Func<TSourceEntity, bool>>);
             _searches = !string.IsNullOrWhiteSpace(pSearches) ? pSearches.ToLower().Split(',', StringSplitOptions.RemoveEmptyEntries) : new List<string>();

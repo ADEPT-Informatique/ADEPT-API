@@ -19,7 +19,7 @@ namespace ADEPT_API.Controllers
         private readonly IUserService _userService;
         public AuthController(IAuthService authService, IUserService userService)
         {
-            _userService = userService ?? throw new ArgumentNullException($"{nameof(AuthController)} was expecting a value for {nameof(userService)} but received null..");
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService), $"{nameof(AuthController)} was expecting a value for {nameof(userService)} but received null..");
         }
 
         [HttpPost]

@@ -50,14 +50,11 @@ namespace ADEPT_API.DATABASE.QueryBuilder
                     _query = _query is null ? queryProgramIds : _query.And(queryProgramIds);
                 }
 
-                if (userQueryDto.UserRoles is { })
+                if (userQueryDto.UserRoles is { } && userQueryDto.UserRoles.Roles is { } && userQueryDto.UserRoles.Roles.Any())
                 {
                     //Query Roles
-                    if (userQueryDto.UserRoles.Roles is { } && userQueryDto.UserRoles.Roles.Any())
-                    {
-                        Expression<Func<User, bool>> queryRoles = entity => entity.Roles.Any(x => userQueryDto.UserRoles.Roles.Contains(x.Role));
-                        _query = _query is null ? queryRoles : _query.And(queryRoles);
-                    }
+                    Expression<Func<User, bool>> queryRoles = entity => entity.Roles.Any(x => userQueryDto.UserRoles.Roles.Contains(x.Role));
+                    _query = _query is null ? queryRoles : _query.And(queryRoles);
                 }
             }
 

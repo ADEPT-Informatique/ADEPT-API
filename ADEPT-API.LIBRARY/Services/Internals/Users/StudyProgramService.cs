@@ -16,11 +16,9 @@ namespace ADEPT_API.LIBRARY.Services.Internals
     {
         private readonly IStudyProgramRepository _studyProgramRepository;
         private readonly IUserRepository _userRepository;
-        private readonly IMapper _mapper;
 
         public StudyProgramService(IStudyProgramRepository studyProgramRepository, IUserRepository userRepository, IMapper mapper)
         {
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), $"{nameof(StudyProgramService)} was expecting a value for {nameof(mapper)} but received null..");
             _studyProgramRepository = studyProgramRepository ?? throw new ArgumentNullException(nameof(studyProgramRepository),$"{nameof(StudyProgramService)} was expecting a value for {nameof(studyProgramRepository)} but received null..");
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository), $"{nameof(StudyProgramService)} was expecting a value for {nameof(userRepository)} but received null..");
         }
