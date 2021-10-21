@@ -1,4 +1,5 @@
-﻿using Sakura.AspNetCore;
+﻿using ADEPT_API.DATACONTRACTS.Enums;
+using Sakura.AspNetCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,38 +8,40 @@ using System.Threading.Tasks;
 
 namespace ADEPT_API.DATABASE.Repositories
 {
-    public interface IBaseRepository<T> where T : class
+    public interface IBaseRepository<TEntity> where TEntity : class
     {
 
-        T Get(Guid id);
-        IEnumerable<T> GetAll(
-          Expression<Func<T, bool>> filter = null,
-          Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-          string includeProperties = null
+        Task<TEntity> GetAsync(Guid id);
+        Task<IEnumerable<TEntity>> GetAllAsync(
+          Expression<Func<TEntity, bool>> filter = null,
+          string orderField = null,
+          OrderDirections orderDirection = OrderDirections.Asc,
+          IncludeResolver<TEntity> includeResolver = null
           );
 
-        PagedList<IQueryable<T>, T> GetPaginatedResults(
+        Task<PagedList<IQueryable<TEntity>, TEntity>> GetPaginatedResultsAsync(
           int pageIndex,
           int pageSize,
-          Expression<Func<T, bool>> filter = null,
-          Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-          string includeProperties = null
+          Expression<Func<TEntity, bool>> filter = null,
+          string orderField = null,
+          OrderDirections orderDirection = OrderDirections.Asc,
+          IncludeResolver<TEntity> includeResolver = null
           );
 
-        T GetFirstOrDefault(
-         Expression<Func<T, bool>> filter = null,
-         string includeProperties = null
+        Task<TEntity> GetFirstOrDefaultAsync(
+         Expression<Func<TEntity, bool>> filter = null,
+         IncludeResolver<TEntity> includeResolver = null
          );
 
-        void Add(T entity);
+        Task AddAsync(TEntity entity);
 
-        void AddOrUpdate(T entity);
+        void AddOrUpdate(TEntity entity);
 
         void Remove(Guid id);
 
-        void Remove(T entity);
+        void Remove(TEntity entity);
 
-        void RemoveRange(IEnumerable<T> entity);
+        void RemoveRange(IEnumerable<TEntity> entity);
 
         void Save();
 

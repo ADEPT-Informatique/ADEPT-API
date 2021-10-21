@@ -25,7 +25,6 @@ namespace ADEPT_API
 {
     public class Startup
     {
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -36,10 +35,10 @@ namespace ADEPT_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAdeptServices();
-            services.AddMappingServices();
             services.AddDbContext<AdeptContext>(options => { options.UseSqlServer(AdeptConfig.Get("AppSettings:connectionString")); }, ServiceLifetime.Singleton);
             services.AddRepositoryServices();
+            services.AddAdeptServices();
+            services.AddMappingServices();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
              .AddJwtBearer(x =>
@@ -55,8 +54,10 @@ namespace ADEPT_API
                 };
             });
 
-            services.AddControllers();
-
+            services.AddControllers().ConfigureApiBehaviorOptions(options =>
+            {
+                options.InvalidModelStateResponseFactory = ModelValidatorMiddleware.ValidateModelState;
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ADEPT_API", Version = "v1" });
@@ -64,7 +65,7 @@ namespace ADEPT_API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public async Task Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -89,7 +90,6 @@ namespace ADEPT_API
 
             app.UseMiddleware<AuthenticationMiddleWare>();
             app.UseMiddleware<ExceptionMiddleware>();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
@@ -109,7 +109,6 @@ namespace ADEPT_API
                     returnSecureToken = true
                 });
                 var data = new StringContent(json, Encoding.UTF8, "application/json");
-
 
 
                 var response = await client.PostAsync("https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=" + apiKey, data);

@@ -6,6 +6,6 @@ namespace ADEPT_API.Repositories.Internals
 {
     internal class AuthRepository : BaseRepository<User>, IAuthRepository
     {
-        public AuthRepository(AdeptContext pContext) : base(pContext) { }
+        public AuthRepository(AdeptContext context) : base(context) { }
     }
 }
