@@ -44,7 +44,7 @@ namespace ADEPT_API.DATABASE.Repositories.Internals.MembreConfiance
             cancellationToken.ThrowIfCancellationRequested();
             var results = new List<ApplicationDto>();
 
-            var expression = this.GetApplicationSearchQuery(applicationsQueryDto);
+            var expression = GetApplicationSearchQuery(applicationsQueryDto);
             var applications = await base.GetAllAsync(expression, includeResolver: this.IncludeAll);
             if (applications is { } && applications.Any())
             {
@@ -59,7 +59,7 @@ namespace ADEPT_API.DATABASE.Repositories.Internals.MembreConfiance
             cancellationToken.ThrowIfCancellationRequested();
             var results = new PaginatedCollectionResultDto<ApplicationDto>();
 
-            var expression = this.GetApplicationSearchQuery(applicationsQueryDto);
+            var expression = GetApplicationSearchQuery(applicationsQueryDto);
             var paginatedResults = await base.GetPaginatedResultsAsync(pageIndex, pageSize, expression, includeResolver: this.IncludeAll);
             if (paginatedResults is { } && paginatedResults.Any())
             {
@@ -123,10 +123,10 @@ namespace ADEPT_API.DATABASE.Repositories.Internals.MembreConfiance
             return query;
         }
 
-        private Expression<Func<Application, bool>> GetApplicationSearchQuery(ApplicationsQueryDto applicationsQueryDto)
+        private static Expression<Func<Application, bool>> GetApplicationSearchQuery(ApplicationsQueryDto applicationsQueryDto)
         {
             var queryBuilder = new ApplicationQueryBuilder(null);
-            var query = queryBuilder.GetQuery(applicationsQueryDto ??= new ApplicationsQueryDto());
+            var query = queryBuilder.GetQuery(applicationsQueryDto);
             return query;
         }
 

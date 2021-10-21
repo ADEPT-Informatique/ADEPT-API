@@ -39,7 +39,7 @@ namespace ADEPT_API.Repositories.Internals.MembreConfiance
             cancellationToken.ThrowIfCancellationRequested();
             var results = new List<QuestionDto>();
 
-            var expression = this.GetQuestionSearchQuery(questionsQueryDto, searches);
+            var expression = GetQuestionSearchQuery(questionsQueryDto, searches);
             var questions = await base.GetAllAsync(expression);
 
             if (questions is { } && questions.Any())
@@ -55,7 +55,7 @@ namespace ADEPT_API.Repositories.Internals.MembreConfiance
             cancellationToken.ThrowIfCancellationRequested();
             var results = new PaginatedCollectionResultDto<QuestionDto>();
 
-            var expression = this.GetQuestionSearchQuery(questionsQueryDto, searches);
+            var expression = GetQuestionSearchQuery(questionsQueryDto, searches);
             var paginatedResults = await base.GetPaginatedResultsAsync(pageIndex, pageSize, expression);
             if (paginatedResults is { } && paginatedResults.Any())
             {
@@ -109,10 +109,10 @@ namespace ADEPT_API.Repositories.Internals.MembreConfiance
 
         #region Helpers
 
-        private Expression<Func<Question, bool>> GetQuestionSearchQuery(QuestionsQueryDto questionsQueryDto, string searches)
+        private static Expression<Func<Question, bool>> GetQuestionSearchQuery(QuestionsQueryDto questionsQueryDto, string searches)
         {
             var queryBuilder = new QuestionQueryBuilder(searches);
-            var query = queryBuilder.GetQuery(questionsQueryDto ??= new QuestionsQueryDto());
+            var query = queryBuilder.GetQuery(questionsQueryDto);
             return query;
         }
 

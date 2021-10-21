@@ -14,7 +14,7 @@ namespace ADEPT_API.DATABASE.QueryBuilder
 
         public override Expression<Func<User, bool>> GetQuery<TQueryDto>(TQueryDto queryDto)
         {
-            if (queryDto is UsersQueryDto userQueryDto)
+            if (queryDto is { } && queryDto is UsersQueryDto userQueryDto)
             {
                 //Query Ids
                 if (userQueryDto.Ids is { } && userQueryDto.Ids.Any())
