@@ -31,7 +31,7 @@ namespace ADEPT_API.Repositories.Internals
             cancellationToken.ThrowIfCancellationRequested();
             var results = new List<UserDto>();
 
-            var expression = this.GetUsersSearchQuery(usersQueryDto, searches);
+            var expression = GetUsersSearchQuery(usersQueryDto, searches);
             var users = await base.GetAllAsync(expression, orderField, orderDirection, UsersIncludeExtensions.IncludeAll);
             if (users is { } && users.Any())
             {
@@ -56,10 +56,10 @@ namespace ADEPT_API.Repositories.Internals
 
         #region Helpers
 
-        private Expression<Func<User,bool>> GetUsersSearchQuery(UsersQueryDto usersQueryDto, string searches)
+        private static Expression<Func<User,bool>> GetUsersSearchQuery(UsersQueryDto usersQueryDto, string searches)
         {
             var queryBuilder = new UserQueryBuilder(searches);
-            var query = queryBuilder.GetQuery(usersQueryDto ??= new UsersQueryDto());
+            var query = queryBuilder.GetQuery(usersQueryDto);
             return query;
         }
 
