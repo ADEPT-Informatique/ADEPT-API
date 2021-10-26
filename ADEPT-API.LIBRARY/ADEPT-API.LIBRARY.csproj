@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Dto\Discord\DiscordStatusUpdateDto.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="LinqKit.Microsoft.EntityFrameworkCore" Version="5.0.26" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
@@ -16,6 +20,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ADEPT-API.DATABASE\ADEPT-API.DATABASE.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="QueryBuilder\Discord\" />
   </ItemGroup>
 
 </Project>

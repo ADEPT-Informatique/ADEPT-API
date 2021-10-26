@@ -15,27 +15,14 @@ namespace ADEPT_API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetMutedUsers()
-        {
-            throw new NotImplementedException();
-        }
-
-        [HttpGet("{pId}")]
-        public async Task<IActionResult> GetMutedUserById()
-        {
-            throw new NotImplementedException();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CreateUserMute()
+        public async Task<IActionResult> GetStatus()
         {
             throw new NotImplementedException();
         }
 
 
-        [HttpPost("{id}")]
-
-        public async Task<IActionResult> UnmuteUser([FromRoute] Guid id, [FromQuery] string reason)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateStatus([FromRoute] Guid id, [FromQuery] string reason)
         {
             throw new NotImplementedException();
         }

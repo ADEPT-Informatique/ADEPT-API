@@ -17,9 +17,9 @@ namespace ADEPT_API.DATABASE.Models.Discord
 
         public string Reason { get; set; }
 
-        [ForeignKey(nameof(BannedUser))]
-        public Guid BannedId { get; set; }
-        public virtual User BannedUser { get; set; }
+        [ForeignKey(nameof(AffectedUser))]
+        public Guid AffectedUserId { get; set; }
+        public virtual User AffectedUser { get; set; }
 
         public long? Duration { get; set; }
 
