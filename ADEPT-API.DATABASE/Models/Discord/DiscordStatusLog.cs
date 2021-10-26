@@ -1,6 +1,6 @@
-﻿using ADEPT_API.DATABASE.Models.Discord.Enums;
+﻿using System;
 using ADEPT_API.DATABASE.Models.Users;
-using System;
+using ADEPT_API.DATACONTRACTS.Dto.Discord.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -30,7 +30,7 @@ namespace ADEPT_API.DATABASE.Models.Discord
         public long CreatedTimestampUtc { get; set; }
 
         [ForeignKey(nameof(ReversionLog))]
-        public Guid ReservionLogId { get; set; }
+        public Guid? ReservionLogId { get; set; }
         public virtual DiscordStatusLog ReversionLog { get; set; }
 
     }

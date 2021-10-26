@@ -1,4 +1,4 @@
-﻿namespace ADEPT_API.DATABASE.Models.Discord.Enums
+﻿namespace ADEPT_API.DATACONTRACTS.Dto.Discord.Enums
 {
     public enum DiscordStatuses
     {

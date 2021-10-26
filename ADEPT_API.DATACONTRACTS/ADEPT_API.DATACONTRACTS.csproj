@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Dto\Discord\" />
     <Folder Include="Dto\Users\Operations\Requests\" />
   </ItemGroup>
 

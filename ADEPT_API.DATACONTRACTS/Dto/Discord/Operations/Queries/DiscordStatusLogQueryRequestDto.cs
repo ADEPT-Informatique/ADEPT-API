@@ -1,20 +1,17 @@
-﻿using ADEPT_API.DATABASE.Models.Discord.Enums;
+﻿using ADEPT_API.DATACONTRACTS.Dto.Discord.Enums;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ADEPT_API.LIBRARY.Dto.Discord.Operations.Queries
+namespace ADEPT_API.DATACONTRACTS.Dto.Discord.Operations.Queries
 {
     [DataContract]
-    class DiscordStatusUpdateQueryRequestDto
+    public class DiscordStatusLogQueryRequestDto
     {
         [DataMember]
-        public IEnumerable<string> AffectedIds { get; set; }
+        public IEnumerable<Guid> AffectedIds { get; set; }
         [DataMember]
-        public IEnumerable<string> CreatedByIds { get; set; }
+        public IEnumerable<Guid> CreatedByIds { get; set; }
         [DataMember]
         public IEnumerable<DiscordStatuses> Types { get; set; }
         [DataMember]
