@@ -1,6 +1,7 @@
 ﻿using ADEPT_API.DATABASE;
 using ADEPT_API.DATABASE.Context;
 using ADEPT_API.DATABASE.Repositories;
+using ADEPT_API.DATACONTRACTS.Enums;
 using Microsoft.EntityFrameworkCore;
 using Sakura.AspNetCore;
 using System;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using System.Linq.Dynamic.Core;
 
 namespace ADEPT_API.Repositories.Internals
 {
@@ -18,9 +20,9 @@ namespace ADEPT_API.Repositories.Internals
 
         protected virtual AdeptContext Context { get { return _context; } }
 
-        protected BaseRepository(AdeptContext pContext)
+        protected BaseRepository(AdeptContext context)
         {
-            _context = pContext ?? throw new ArgumentNullException($"{nameof(BaseRepository<TEntity>)} was expection a value for {nameof(pContext)} but received null..");
+            _context = context ?? throw new ArgumentNullException(nameof(context), $"{nameof(BaseRepository<TEntity>)} was expection a value for {nameof(context)} but received null..");
             this.dbSet = _context.Set<TEntity>();
         }
 
@@ -48,7 +50,7 @@ namespace ADEPT_API.Repositories.Internals
             return await dbSet.FindAsync(id);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, IncludeResolver<TEntity> includeResolver = null)
+        public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null, string orderField = null, OrderDirections orderDirection = OrderDirections.Asc, IncludeResolver<TEntity> includeResolver = null)
         {
             IQueryable<TEntity> query = dbSet;
 
@@ -62,14 +64,15 @@ namespace ADEPT_API.Repositories.Internals
                 query = includeResolver(query);
             }
 
-            if (orderBy is { })
+            if (!string.IsNullOrWhiteSpace(orderField))
             {
-                return await orderBy(query).ToListAsync();
+                query = query.OrderBy($"{orderField} {orderDirection}");
             }
+
             return await query.ToListAsync();
         }
 
-        public async Task<PagedList<IQueryable<TEntity>, TEntity>> GetPaginatedResultsAsync(int pageIndex, int pageSize, Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, IncludeResolver<TEntity> includeResolver = null)
+        public async Task<PagedList<IQueryable<TEntity>, TEntity>> GetPaginatedResultsAsync(int pageIndex, int pageSize, Expression<Func<TEntity, bool>> filter = null, string orderField = null, OrderDirections orderDirection = OrderDirections.Asc, IncludeResolver<TEntity> includeResolver = null)
         {
             IQueryable<TEntity> query = dbSet;
 
@@ -83,9 +86,9 @@ namespace ADEPT_API.Repositories.Internals
                 query = includeResolver(query);
             }
 
-            if (orderBy is { })
+            if (!string.IsNullOrWhiteSpace(orderField))
             {
-                query = orderBy(query);
+                query = query.OrderBy($"{orderField} {orderDirection}");
             }
 
             return await query.ToPagedListAsync(pageSize, pageIndex);

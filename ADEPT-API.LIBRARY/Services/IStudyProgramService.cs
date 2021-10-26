@@ -1,6 +1,7 @@
-﻿using ADEPT_API.LIBRARY.Dto.Users;
+﻿using ADEPT_API.DATACONTRACTS.Dto.Users;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ADEPT_API.LIBRARY.Services
@@ -11,19 +12,26 @@ namespace ADEPT_API.LIBRARY.Services
     public interface IStudyProgramService
     {
         /// <summary>
-        /// Creates a study program
+        /// Create a program
         /// </summary>
-        /// <param name="pProgram"></param>
-        Task<StudyProgramDto> CreateAsync(StudyProgramCreateRequestDto pProgram);
-        /// <summary>
-        /// Checks how many users are affected if study program is to be removed
-        /// </summary>
-        /// <param name="pProgramId"></param>
-        Task<int> DeletionImpactAsync(Guid pProgramId);
+        /// <param name="studyProgramCreateRequestDto">The create request</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
+        /// <returns></returns>
+        Task<StudyProgramDto> CreateAsync(StudyProgramCreateRequestDto studyProgramCreateRequestDto, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Fetches all StudyPrograms from the Database
+        /// Obtain the number of user impacted by the deletion of a specific program
         /// </summary>
-        Task<IEnumerable<StudyProgramDto>> GetAllAsync();
+        /// <param name="programId">The program id</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
+        /// <returns></returns>
+        Task<int> DeletionImpactAsync(Guid programId, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Obtain all programs
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation Token</param>
+        /// <returns></returns>
+        Task<IEnumerable<StudyProgramDto>> GetAllAsync(CancellationToken cancellationToken);
     }
 }

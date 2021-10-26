@@ -1,11 +1,9 @@
-﻿using ADEPT_API.Exceptions;
-using ADEPT_API.LIBRARY.Dto.Users;
-using ADEPT_API.LIBRARY.Exceptions.Interface;
+﻿using ADEPT_API.DATACONTRACTS.Dto.Users;
 using ADEPT_API.LIBRARY.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 
@@ -16,34 +14,32 @@ namespace ADEPT_API.Controllers
     public class StudyProgramController : ControllerBase
     {
         private readonly IStudyProgramService _studyProgramService;
-        public StudyProgramController(IStudyProgramService pStudyProgramService)
+        public StudyProgramController(IStudyProgramService studyProgramService)
         {
-            _studyProgramService = pStudyProgramService;
+            _studyProgramService = studyProgramService;
         }
+
         [HttpGet]
-        //[Authorize]
         [ProducesResponseType(typeof(IEnumerable<StudyProgramDto>), 200)]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetPrograms(CancellationToken cancellationToken)
         {
-            var response = _studyProgramService.GetAllAsync();
+            var response = await _studyProgramService.GetAllAsync(cancellationToken);
             return Ok(response);
         }
 
         [HttpPost]
-        //[Authorize]
         [ProducesResponseType(typeof(StudyProgramDto), 200)]
-        public async Task<IActionResult> Post([FromBody] StudyProgramCreateRequestDto body)
+        public async Task<IActionResult> CreateProgram([FromBody] StudyProgramCreateRequestDto studyProgramCreateRequestDto, CancellationToken cancellationToken)
         {
-            var response = _studyProgramService.CreateAsync(body);
+            var response = await _studyProgramService.CreateAsync(studyProgramCreateRequestDto, cancellationToken);
             return Ok(response);
         }
 
-        //[Authorize]
         [HttpGet("{id}/deletionimpact")]
         [ProducesResponseType(typeof(int), 200)]
-        public async Task<IActionResult> GetDeletionImpact([FromRoute] Guid id)
+        public async Task<IActionResult> GetProgramDeletionImpact([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            var response = _studyProgramService.DeletionImpactAsync(id);
+            var response = await _studyProgramService.DeletionImpactAsync(id, cancellationToken);
             return Ok(response);
         }
     }

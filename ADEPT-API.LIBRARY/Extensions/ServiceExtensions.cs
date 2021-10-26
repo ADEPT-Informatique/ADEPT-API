@@ -15,6 +15,7 @@ namespace ADEPT_API.LIBRARY.Extensions
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IStudyProgramService, StudyProgramService>();
             services.AddTransient<IQuestionService, QuestionService>();
+            services.AddTransient<IApplicationService, ApplicationService>();
         }
     }
 }

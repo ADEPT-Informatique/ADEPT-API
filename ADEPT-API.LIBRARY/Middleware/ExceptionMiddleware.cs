@@ -1,4 +1,4 @@
-﻿using ADEPT_API.Dto.Errors;
+﻿using ADEPT_API.DATACONTRACTS.Dto.Errors;
 using ADEPT_API.LIBRARY.Exceptions.Interface;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -37,7 +37,7 @@ namespace ADEPT_API.LIBRARY.Middleware
                 else
                 {
                     contextResponse.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    error = new Error { ErrorCode = "UnHandledError", Message = exception?.Message, Stacktrace = exception?.StackTrace };
+                    error = new Error { ErrorCode = "ERR_UNHANDLED", Message = "Unhandled Error", Stacktrace = "Unhandled Error" };
                 }
 
                 await contextResponse.WriteAsync(JsonConvert.SerializeObject(error));

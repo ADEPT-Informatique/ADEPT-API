@@ -20,7 +20,7 @@ namespace ADEPT_API.Controllers
             throw new NotImplementedException();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{pId}")]
         public async Task<IActionResult> GetMutedUserById()
         {
             throw new NotImplementedException();

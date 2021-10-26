@@ -1,7 +1,7 @@
-﻿using ADEPT_API.LIBRARY.Dto;
-using ADEPT_API.LIBRARY.Dto.MembreConfiances.Questions;
-using ADEPT_API.LIBRARY.Dto.MembreConfiances.Questions.Operations.Queries;
-using ADEPT_API.LIBRARY.Dto.MembreConfiances.Questions.Operations.Requests;
+﻿using ADEPT_API.DATACONTRACTS.Dto;
+using ADEPT_API.DATACONTRACTS.Dto.MembreConfiances.Questions;
+using ADEPT_API.DATACONTRACTS.Dto.MembreConfiances.Questions.Operations.Queries;
+using ADEPT_API.DATACONTRACTS.Dto.MembreConfiances.Questions.Operations.Requests;
 using ADEPT_API.LIBRARY.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,13 +14,13 @@ namespace ADEPT_API.Controllers.MembreConfiance
 {
     [Route("api/membreconfiance/questions")]
     [ApiController]
-    public class QuestionsController : ControllerBase
+    public class QuestionsController : ApiController
     {
         private readonly IQuestionService _questionsService;
 
         public QuestionsController(IQuestionService questionService)
         {
-            _questionsService = questionService ?? throw new ArgumentNullException($"{nameof(QuestionsController)} was expection a value for {nameof(questionService)} but received null..");
+            _questionsService = questionService ?? throw new ArgumentNullException(nameof(questionService), $"{nameof(QuestionsController)} was expection a value for {nameof(questionService)} but received null..");
         }
 
         [HttpPost("query")]

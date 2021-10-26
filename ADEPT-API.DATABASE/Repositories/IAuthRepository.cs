@@ -2,6 +2,8 @@
 
 namespace ADEPT_API.DATABASE.Repositories
 {
-    public interface IAuthRepository : IBaseRepository<User> { }
+    public interface IAuthRepository : IBaseRepository<User>
+    {
 
+    }
 }

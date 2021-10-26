@@ -65,7 +65,7 @@ namespace ADEPT_API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public async Task Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -113,8 +113,8 @@ namespace ADEPT_API
 
                 var response = await client.PostAsync("https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=" + apiKey, data);
 
-                dynamic kekw = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
-                AdeptConfig.TestToken = kekw.idToken;
+                dynamic responseObject = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
+                AdeptConfig.TestToken = responseObject.idToken;
             }
         }
     }
