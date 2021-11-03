@@ -1,6 +1,6 @@
-﻿using ADEPT_API.DATABASE.Models.Users;
-using ADEPT_API.DATACONTRACTS.Dto.Users;
+﻿using ADEPT_API.DATACONTRACTS.Dto.Users;
 using ADEPT_API.DATACONTRACTS.Dto.Users.Authentification;
+using ADEPT_API.LIBRARY.Firebase.Authentification.Managers;
 using ADEPT_API.LIBRARY.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,42 +16,19 @@ namespace ADEPT_API.Controllers
     [Authorize]
     public class AuthController : ApiController
     {
-        private readonly IUserService _userService;
-        public AuthController(IAuthService authService, IUserService userService)
+        private readonly IAuthService _authService;
+        public AuthController(IAuthService authService)
         {
-            _userService = userService ?? throw new ArgumentNullException(nameof(userService), $"{nameof(AuthController)} was expecting a value for {nameof(userService)} but received null..");
+            _authService = authService ?? throw new ArgumentNullException(nameof(authService), $"{nameof(AuthController)} was expecting a value for {nameof(authService)} but received null..");
         }
 
         [HttpPost]
-        public async Task<IActionResult> Authenticate(AuthenticateInDto authenticateInDto, CancellationToken cancellationToken)
+        public async Task<IActionResult> Authenticate([FromBody] AuthenticateInDto authenticateInDto, CancellationToken cancellationToken)
         {
-            // Création d'un nouvel utilisateur si celui-ci est Authorized, mais où le current user est null.
-            // L'utilisation du body n'est nécessaire que pour la création du compte, puisque l'information est plus complexe à obtenir en back-end qu'en front-end.
+            cancellationToken.ThrowIfCancellationRequested();
 
-            User currentUser = this.CurrentUser;
-            UserSummaryDto user;
-            if (CurrentUser != null)
-            {
-                user = new UserSummaryDto
-                {
-                    Id = currentUser.Id,
-                    Email = currentUser.Email,
-                    Username = currentUser.Username
-                };
-            }
-            else
-            {
-                var newUser = await _userService.CreateFirebaseUserAsync(this.User.Claims.FirstOrDefault(x => x.Type.ToUpper() == "USER_ID")?.Value, authenticateInDto, cancellationToken);
-                user = new UserSummaryDto()
-                {
-                    Id = newUser.Id,
-                    Username = newUser.Username,
-                    Email = newUser.Email
-                };
-            }
-
+            var user = await _authService.AuthenticateUserAsync(base.AuthenticatedFirebaseId, authenticateInDto, cancellationToken);
             return Ok(user);
-
         }
     }
 }

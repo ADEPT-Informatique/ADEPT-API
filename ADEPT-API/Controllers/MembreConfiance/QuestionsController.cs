@@ -29,7 +29,6 @@ namespace ADEPT_API.Controllers.MembreConfiance
         }
 
         [HttpPost("query")]
-        //[Roles(Roles.Admin)]
         [ProducesResponseType(typeof(IEnumerable<QuestionDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetQuestionByQuery([FromBody] QuestionsQueryDto questionsQueryDto, CancellationToken cancellationToken, [FromQuery] string searches = null)
         {
@@ -66,6 +65,7 @@ namespace ADEPT_API.Controllers.MembreConfiance
         }
 
         [HttpPut("{id}")]
+        [Roles(Roles.Admin)]
         [ProducesResponseType(typeof(QuestionDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateQuestion([FromRoute] Guid id,[FromBody] QuestionUpdateRequestDto questionUpdateRequestDto, CancellationToken cancellationToken)
         {
@@ -76,6 +76,7 @@ namespace ADEPT_API.Controllers.MembreConfiance
         }
 
         [HttpPut("{id}/toggle")]
+        [Roles(Roles.Admin)]
         [ProducesResponseType(typeof(QuestionDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> ToggleQuestion([FromRoute]Guid id, CancellationToken cancellationToken)
         {
@@ -86,6 +87,7 @@ namespace ADEPT_API.Controllers.MembreConfiance
         }
 
         [HttpDelete("{id}")]
+        [Roles(Roles.Admin)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<IActionResult> DeleteQuestion(Guid id, CancellationToken cancellationToken)
         {
