@@ -5,9 +5,9 @@ namespace ADEPT_API.Exceptions
 {
     public class NotFoundException : AdeptException
     {
-        public NotFoundException(string pEntityName, string pMessage) : base("ERR_NOTFOUND", pMessage, HttpStatusCode.NotFound) 
+        public NotFoundException(string entityName, string message) : base("ERR_NOTFOUND", message, HttpStatusCode.NotFound) 
         {
-            base.ErrorCode = $"{base.ErrorCode}_{pEntityName}";
+            base.ErrorCode = $"{base.ErrorCode}_{entityName}";
         }
     }
 }

@@ -46,7 +46,7 @@ namespace ADEPT_API.DATABASE.QueryBuilder
                 //Query ProgramIds
                 if (userQueryDto.ProgramIds is { } && userQueryDto.ProgramIds.Any())
                 {
-                    Expression<Func<User, bool>> queryProgramIds = entity => userQueryDto.ProgramIds.Contains(entity.ProgramId);
+                    Expression<Func<User, bool>> queryProgramIds = entity => userQueryDto.ProgramIds.Contains(entity.ProgramId.GetValueOrDefault());
                     _query = _query is null ? queryProgramIds : _query.And(queryProgramIds);
                 }
 

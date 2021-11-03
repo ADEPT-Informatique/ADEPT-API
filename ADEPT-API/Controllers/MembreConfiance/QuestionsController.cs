@@ -2,7 +2,10 @@
 using ADEPT_API.DATACONTRACTS.Dto.MembreConfiances.Questions;
 using ADEPT_API.DATACONTRACTS.Dto.MembreConfiances.Questions.Operations.Queries;
 using ADEPT_API.DATACONTRACTS.Dto.MembreConfiances.Questions.Operations.Requests;
+using ADEPT_API.DATACONTRACTS.Dto.Users.Enums;
+using ADEPT_API.LIBRARY.Security.Handlers;
 using ADEPT_API.LIBRARY.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,6 +17,8 @@ namespace ADEPT_API.Controllers.MembreConfiance
 {
     [Route("api/membreconfiance/questions")]
     [ApiController]
+    [Authorize]
+    [Produces("application/json")]
     public class QuestionsController : ApiController
     {
         private readonly IQuestionService _questionsService;
@@ -24,6 +29,7 @@ namespace ADEPT_API.Controllers.MembreConfiance
         }
 
         [HttpPost("query")]
+        //[Roles(Roles.Admin)]
         [ProducesResponseType(typeof(IEnumerable<QuestionDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetQuestionByQuery([FromBody] QuestionsQueryDto questionsQueryDto, CancellationToken cancellationToken, [FromQuery] string searches = null)
         {
@@ -49,6 +55,7 @@ namespace ADEPT_API.Controllers.MembreConfiance
         }
 
         [HttpPost]
+        [Roles(Roles.Admin)]
         [ProducesResponseType(typeof(QuestionDto), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> CreateQuestion([FromBody] QuestionCreateRequestDto questionCreateRequestDto, CancellationToken cancellationToken)
         {

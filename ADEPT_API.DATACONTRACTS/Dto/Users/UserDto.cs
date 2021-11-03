@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace ADEPT_API.DATACONTRACTS.Dto.Users
@@ -8,6 +9,9 @@ namespace ADEPT_API.DATACONTRACTS.Dto.Users
     {
         [DataMember]
         public Guid Id { get; set; }
+
+        [IgnoreDataMember]
+        public string firebaseId { get; set; }
 
         [DataMember]
         public int StudentNumber { get; set; }
@@ -22,6 +26,9 @@ namespace ADEPT_API.DATACONTRACTS.Dto.Users
         public string FullName { get; set; }
 
         [DataMember]
-        public virtual StudyProgramDto Program { get; set; }
+        public StudyProgramDto Program { get; set; }
+
+        [IgnoreDataMember]
+        public IEnumerable<UserRoleDto> Roles { get; set; }
     }
 }

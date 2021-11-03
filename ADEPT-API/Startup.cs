@@ -1,19 +1,16 @@
-using ADEPT_API.DATABASE.Context;
+﻿using ADEPT_API.DATABASE.Context;
 using ADEPT_API.DATABASE.Extensions;
 using ADEPT_API.LIBRARY.Configurations;
 using ADEPT_API.LIBRARY.Extensions;
 using ADEPT_API.LIBRARY.Middleware;
-using FirebaseAdmin;
+using ADEPT_API.LIBRARY.Security.Extensions;
 using FirebaseAdmin.Auth;
-using Google.Apis.Auth.OAuth2;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using System.Net.Http;
@@ -39,20 +36,7 @@ namespace ADEPT_API
             services.AddRepositoryServices();
             services.AddAdeptServices();
             services.AddMappingServices();
-
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-             .AddJwtBearer(x =>
-            {
-                x.Authority = "https://securetoken.google.com/adept-api";
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidIssuer = "https://securetoken.google.com/adept-api",
-                    ValidateAudience = true,
-                    ValidAudience = "adept-api",
-                    ValidateLifetime = true
-                };
-            });
+            services.AddAdeptAuthentificationServices();
 
             services.AddControllers().ConfigureApiBehaviorOptions(options =>
             {
@@ -65,7 +49,7 @@ namespace ADEPT_API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async Task Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -74,28 +58,17 @@ namespace ADEPT_API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ADEPT_API v1"));
             }
 
-            FirebaseApp.Create(new AppOptions()
-            {
-                Credential = GoogleCredential.FromFile("firebase-auth.json"),
-                ProjectId = "adept-api"
-            });
-
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthentication();
-
             app.UseAuthorization();
-
-            app.UseMiddleware<AuthenticationMiddleWare>();
             app.UseMiddleware<ExceptionMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-            string customToken = await FirebaseAuth.DefaultInstance.CreateCustomTokenAsync("urOxnFybSTVo4Nai5rWuQuYWJAA3");
-            await SignInWithCustomTokenAsync(customToken);
+            string customToken = FirebaseAuth.DefaultInstance.CreateCustomTokenAsync("6TcvpIJOzeN4oUiGZO0RTiw8og93").GetAwaiter().GetResult();
+            SignInWithCustomTokenAsync(customToken).GetAwaiter().GetResult();
         }
 
         private static async Task SignInWithCustomTokenAsync(string customToken)
@@ -111,11 +84,15 @@ namespace ADEPT_API
                 var data = new StringContent(json, Encoding.UTF8, "application/json");
 
 
+
                 var response = await client.PostAsync("https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=" + apiKey, data);
 
-                dynamic responseObject = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
-                AdeptConfig.TestToken = responseObject.idToken;
+                dynamic kekw = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
+                AdeptConfig.TestToken = kekw.idToken;
+
+                //Arr�tez sur la ligne suivante pour obtenir l'idToken pour test
             }
         }
+
     }
 }
