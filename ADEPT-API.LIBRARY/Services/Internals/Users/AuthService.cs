@@ -21,12 +21,12 @@ namespace ADEPT_API.LIBRARY.Services.Internals
         public async Task<UserSummaryDto> AuthenticateUserAsync(string firebaseId, AuthenticateInDto authenticateInDto, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            _ = string.IsNullOrWhiteSpace(firebaseId) ? throw new ArgumentNullException() : string.Empty;
+            _ = string.IsNullOrWhiteSpace(firebaseId) ? throw new ArgumentNullException(nameof(firebaseId), $"{nameof(AuthenticateUserAsync)} expected a value for {nameof(firebaseId)}.") : string.Empty;
 
             var authenticatedUser = await _firebaseAuthManager.GetUserToAuthenticateAsync(firebaseId, cancellationToken);
             if (authenticatedUser is null)
             {
-                var userToAuthenticate = await _userRepository.CreateFirebaseUserAsync(firebaseId, authenticateInDto, cancellationToken);               
+                authenticatedUser = await _userRepository.CreateFirebaseUserAsync(firebaseId, authenticateInDto, cancellationToken);               
             }
 
             var result = new UserSummaryDto { Email = authenticateInDto.Email, Id = authenticatedUser.Id, Username = authenticatedUser.Username };
