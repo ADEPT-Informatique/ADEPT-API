@@ -21,6 +21,13 @@ namespace ADEPT_API.LIBRARY.Services.Internals.Users.Mappers
                 .ForMember(dst => dst.FullName, opt => opt.MapFrom(src => src.FullName))
                 .ForMember(dst => dst.StudentNumber, opt => opt.MapFrom(src => src.StudentNumber))
                 .ForMember(dst => dst.Username, opt => opt.MapFrom(src => src.Username))
+                .ForMember(dst => dst.Roles, opt => opt.MapFrom(src => src.Roles))
+                .ForMember(dst => dst.firebaseId, opt => opt.MapFrom(src => src.FireBaseID))
+                .ForAllOtherMembers(opt => opt.Ignore());
+
+            CreateMap<UserRole, UserRoleDto>()
+                .ForMember(dst => dst.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dst => dst.Role, opt => opt.MapFrom(src => src.Role))
                 .ForAllOtherMembers(opt => opt.Ignore());
         }
     }

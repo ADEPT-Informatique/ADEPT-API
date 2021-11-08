@@ -54,7 +54,7 @@ namespace ADEPT_API.Controllers.MembreConfiance
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var response = await _applicationService.CreateApplicationAsync(base.AuthentificatedUserId, applicationCreateRequestDto, cancellationToken);
+            var response = await _applicationService.CreateApplicationAsync(base.AuthenticatedUserId, applicationCreateRequestDto, cancellationToken);
             return Ok(response);
         }
 
@@ -64,7 +64,7 @@ namespace ADEPT_API.Controllers.MembreConfiance
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var response = await _applicationService.UpdateApplicationAsync(pId, base.AuthentificatedUserId, applicationUpdateRequestDto, cancellationToken);
+            var response = await _applicationService.UpdateApplicationAsync(pId, base.AuthenticatedUserId, applicationUpdateRequestDto, cancellationToken);
             return Ok(response);
         }
 
@@ -74,7 +74,7 @@ namespace ADEPT_API.Controllers.MembreConfiance
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var response = await _applicationService.CancelApplicationAsync(pId, base.AuthentificatedUserId, cancellationToken);
+            var response = await _applicationService.CancelApplicationAsync(pId, base.AuthenticatedUserId, cancellationToken);
             return Ok(response);
         }
 
@@ -84,7 +84,7 @@ namespace ADEPT_API.Controllers.MembreConfiance
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var response = await _applicationService.UpdateApplicationStateAsync(pId, base.AuthentificatedUserId, applicationUpdateStateRequestDto, cancellationToken);
+            var response = await _applicationService.UpdateApplicationStateAsync(pId, base.AuthenticatedUserId, applicationUpdateStateRequestDto, cancellationToken);
             return Ok(response);
         }
     }

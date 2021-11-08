@@ -1,6 +1,6 @@
-﻿using ADEPT_API.DATABASE.Models.Users;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 namespace ADEPT_API.Controllers
 {
@@ -8,27 +8,33 @@ namespace ADEPT_API.Controllers
     {
         public ApiController() { }
 
-        public User CurrentUser
-        {
-            get
-            {
-                return (User)HttpContext.Items["User"];
-            }
-        }
-
-        public Guid AuthentificatedUserId
+        public string AuthenticatedFirebaseId
         {
             get
             {
                 try
                 {
-                    //TODO-OG Add Logic to fetch userId from Token / Claims
-                    return Guid.Empty;
+                    return this.HttpContext.User.Identities.First().Claims.FirstOrDefault(x => x.Type == "user_id")?.Value;
                 }
                 catch
                 {
 
-                   return Guid.Empty;
+                    return string.Empty;
+                }
+            }
+        }
+
+        public Guid AuthenticatedUserId
+        {
+            get
+            {
+                try
+                {
+                   return Guid.Parse(this.HttpContext.User.Identities.First().Claims.FirstOrDefault(x => x.Type == "adeptUserId")?.Value);
+                }
+                catch 
+                {
+                    return Guid.Empty;
                 }
             }
         }

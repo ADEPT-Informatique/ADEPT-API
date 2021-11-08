@@ -26,6 +26,22 @@ namespace ADEPT_API.Repositories.Internals
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper), $"{nameof(UserRepository)} was expection a value for {nameof(mapper)} but received null..");
         }
 
+        public async Task<UserDto> GetUserByIdAsync(Guid userId, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var user = await base.GetFirstOrDefaultAsync(entity=>entity.Id == userId);
+            return _mapper.Map<User, UserDto>(user);
+        }
+
+        public async Task<UserDto> GetUserByFirebaseIdAsync(string firebaseId, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var user = await base.GetFirstOrDefaultAsync(entity=>entity.FireBaseID == firebaseId);
+            return _mapper.Map<User,UserDto>(user);
+        }
+
         public async Task<IEnumerable<UserDto>> GetUsersByQueryAsync(UsersQueryDto usersQueryDto, CancellationToken cancellationToken, string orderField = null, OrderDirections orderDirection = OrderDirections.Asc,  string searches = null)
         {
             cancellationToken.ThrowIfCancellationRequested();

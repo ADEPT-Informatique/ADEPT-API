@@ -2,6 +2,7 @@
 using ADEPT_API.DATACONTRACTS.Dto.Users.Authentification;
 using ADEPT_API.DATACONTRACTS.Dto.Users.Operations.Queries;
 using ADEPT_API.DATACONTRACTS.Enums;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,5 +30,21 @@ namespace ADEPT_API.DATABASE.Repositories
         /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns></returns>
         Task<UserDto> CreateFirebaseUserAsync(string firebaseId, AuthenticateInDto authenticateInDto, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Obtain a specific user
+        /// </summary>
+        /// <param name="userId">The user Id</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
+        /// <returns></returns>
+        Task<UserDto> GetUserByIdAsync(Guid userId, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Obtain a specific user based on its firebaseId
+        /// </summary>
+        /// <param name="firebaseId">The firebase id</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
+        /// <returns></returns>
+        Task<UserDto> GetUserByFirebaseIdAsync(string firebaseId, CancellationToken cancellationToken);
     }
 }

@@ -18,7 +18,7 @@ namespace ADEPT_API.DATABASE.Models.Users
         public string FullName { get; set; }
 
         [ForeignKey(nameof(Program))]
-        public Guid ProgramId { get; set; }
+        public Guid? ProgramId { get; set; }
         public virtual StudyProgram Program { get; set; }
 
         public User()
