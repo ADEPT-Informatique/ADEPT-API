@@ -1,14 +1,14 @@
 ﻿using ADEPT_API.DATABASE.Models.Users;
 using ADEPT_API.DATABASE.Repositories;
-using ADEPT_API.Exceptions;
-using ADEPT_API.LIBRARY.Firebase.Authentification.Adapters.Internals;
 using ADEPT_API.DATACONTRACTS.Dto.Users;
+using ADEPT_API.Exceptions;
+using ADEPT_API.LIBRARY.Exceptions;
+using ADEPT_API.LIBRARY.Firebase.Authentification.Adapters.Internals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 
 namespace ADEPT_API.LIBRARY.Firebase.Authentification.Managers.Internals
 {
@@ -49,7 +49,7 @@ namespace ADEPT_API.LIBRARY.Firebase.Authentification.Managers.Internals
             var verifiedToken = await _firebaseAuthAdapter.VerifyFirebaseToken(userToken);
             if (verifiedToken is null)
             {
-                //TODO-OG throw an not authorize Exception
+                throw new UnAuthorizedException(nameof(User), "Vérification du token firebase a échouée.");
             }
         }
     }

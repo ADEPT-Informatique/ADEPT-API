@@ -8,11 +8,11 @@ namespace ADEPT_API.LIBRARY.Services
     public interface IAuthService
     {
         /// <summary>
-        /// 
+        /// Authenticate a user
         /// </summary>
-        /// <param name="firebaseId"></param>
-        /// <param name="authenticateInDto"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="firebaseId">The firebase id</param>
+        /// <param name="authenticateInDto">The authenticate request</param>
+        /// <param name="cancellationToken">Cancellation Token</param>
         /// <returns></returns>
         Task<UserSummaryDto> AuthenticateUserAsync(string firebaseId, AuthenticateInDto authenticateInDto, CancellationToken cancellationToken);
     }

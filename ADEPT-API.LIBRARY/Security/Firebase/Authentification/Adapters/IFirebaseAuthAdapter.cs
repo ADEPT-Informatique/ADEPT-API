@@ -9,22 +9,22 @@ namespace ADEPT_API.LIBRARY.Firebase.Authentification.Adapters.Internals
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="firebaseId"></param>
-        /// <param name="customClaims"></param>
+        /// <param name="firebaseId">the firebase id</param>
+        /// <param name="customClaims">The custom claims</param>
         /// <returns></returns>
         Task AddCustomClaimsToUser(string firebaseId, IReadOnlyDictionary<string, object> customClaims);
 
         /// <summary>
-        /// 
+        /// Verify the firebase token
         /// </summary>
-        /// <param name="token"></param>
+        /// <param name="token">The firebase token</param>
         /// <returns></returns>
         Task<FirebaseToken> VerifyFirebaseToken(string token);
 
         /// <summary>
-        /// 
+        /// Revoke a token firebase
         /// </summary>
-        /// <param name="firebaseId"></param>
+        /// <param name="firebaseId">The firebase id</param>
         /// <returns></returns>
         Task RevokeTokenAsync(string firebaseId);
     }
